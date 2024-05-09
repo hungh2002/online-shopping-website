@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+    Configuration file for UrlRewriteFilter
+    http://www.tuckey.org/urlrewrite/
+
+ -->
+<urlrewrite>
+	<rule>
+		<note> The rule means that requests to /x will be redirected to /x.jsp the url will be rewritten. </note>
+		<from>^/?([a-z]+)$</from>
+		<to type="forward">/view/page/$1.jsp</to>
+	</rule>
+</urlrewrite>
