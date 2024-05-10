@@ -1,12 +1,12 @@
 ###### Languages
-[![Static Badge](https://img.shields.io/badge/lang-en-green)](../README.md)
+[![Static Badge](https://img.shields.io/badge/lang-ja-green)](README.ja.md)
 
 # Learn Java Servlet/JSP through creating an online shopping website.
 
 ### ERD
 [ERD](database/output.pdf)
 ### Import database data
-    database/database_test_202405100606.sql
+    database/database.sql
 
 ### Environment variable
     src/main/java/com/seifu/config/environmentVariable/Env.java
