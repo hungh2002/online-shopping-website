@@ -1,9 +1,9 @@
-package com.seifu.model.databaseConnectionTest;
+package com.hungh2002.model.databaseConnectionTest;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import com.seifu.config.DBConnection;
+import com.hungh2002.config.DBConnection;
 
 // DAO = Data Access Object
 // --> "https://stackoverflow.com/questions/19154202/what-is-data-access-object-dao-in-java"

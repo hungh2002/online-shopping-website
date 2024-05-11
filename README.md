@@ -9,7 +9,7 @@
     database/database.sql
 
 ### Environment variable
-    src/main/java/com/seifu/config/environmentVariable/Env.java
+    src/main/java/com/hungh2002/config/environmentVariable/Env.java
 
 <br>
 <details>

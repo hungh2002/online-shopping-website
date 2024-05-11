@@ -1,8 +1,8 @@
-package com.seifu.controller;
+package com.hungh2002.controller;
 
 import java.io.IOException;
 
-import com.seifu.service.HelloWorldService;
+import com.hungh2002.service.HelloWorldService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

@@ -1,6 +1,6 @@
-/home/hungh2002/Projects/class/workspace/online-shopping-website/src/main/java/com/seifu/config/environmentVariable/Env.java
-/home/hungh2002/Projects/class/workspace/online-shopping-website/src/main/java/com/seifu/model/databaseConnectionTest/DatabaseTest.java
-/home/hungh2002/Projects/class/workspace/online-shopping-website/src/main/java/com/seifu/service/HelloWorldService.java
-/home/hungh2002/Projects/class/workspace/online-shopping-website/src/main/java/com/seifu/config/DBConnection.java
-/home/hungh2002/Projects/class/workspace/online-shopping-website/src/main/java/com/seifu/controller/HelloWorldController.java
-/home/hungh2002/Projects/class/workspace/online-shopping-website/src/main/java/com/seifu/model/databaseConnectionTest/DatabaseTestDAO.java
+/home/hungh2002/Projects/demo-online-shopping-website/src/main/java/com/hungh2002/service/HelloWorldService.java
+/home/hungh2002/Projects/demo-online-shopping-website/src/main/java/com/hungh2002/config/environmentVariable/Env.java
+/home/hungh2002/Projects/demo-online-shopping-website/src/main/java/com/hungh2002/model/databaseConnectionTest/DatabaseTest.java
+/home/hungh2002/Projects/demo-online-shopping-website/src/main/java/com/hungh2002/controller/HelloWorldController.java
+/home/hungh2002/Projects/demo-online-shopping-website/src/main/java/com/hungh2002/config/DBConnection.java
+/home/hungh2002/Projects/demo-online-shopping-website/src/main/java/com/hungh2002/model/databaseConnectionTest/DatabaseTestDAO.java

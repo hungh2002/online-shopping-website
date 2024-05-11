@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-import com.seifu.config.DBConnection;
-import com.seifu.model.databaseConnectionTest.DatabaseTestDAO;
+import com.hungh2002.config.DBConnection;
+import com.hungh2002.model.databaseConnectionTest.DatabaseTestDAO;
 
 // write tests for small pieces of code (unit test)
 // --> "https://junit.org/junit5/docs/current/user-guide/"

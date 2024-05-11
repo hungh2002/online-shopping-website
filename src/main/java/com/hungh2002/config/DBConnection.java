@@ -1,9 +1,9 @@
-package com.seifu.config;
+package com.hungh2002.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import com.seifu.config.environmentVariable.Env;
+import com.hungh2002.config.environmentVariable.Env;
 
 public class DBConnection {
 

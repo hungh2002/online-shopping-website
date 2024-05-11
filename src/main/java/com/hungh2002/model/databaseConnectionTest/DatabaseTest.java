@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.seifu.model.databaseConnectionTest;
+package com.hungh2002.model.databaseConnectionTest;
 
 // Create an entity to represent an object in the database
 public class DatabaseTest {
