@@ -10,13 +10,13 @@ import com.hungh2002.service.utils.SQLStatement;
  */
 public class ProductDAO extends DBConnection {
 
-    public ResultSet queryData(String orderByColumn, String sortOrder, String limit) {
+    public ResultSet queryData(String orderByColumn, String sortOrder, String where, String limit) {
         ResultSet resultSet = null;
 
         // SQL statements
         // --> "SELECT * FROM products ORDER BY ${orderByColumn} ${sortOrder} LIMIT ${limit}"
         String sqlQueryString =
-                SQLStatement.select("*", "products", orderByColumn, sortOrder, limit);
+                SQLStatement.select("*", "products", orderByColumn, sortOrder, where, limit);
 
         // execute the SQL statement
         try {

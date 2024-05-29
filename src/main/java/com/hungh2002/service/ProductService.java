@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.hungh2002.model.product.Product;
 import com.hungh2002.model.product.ProductDAO;
 import com.hungh2002.service.utils.UrlParam;
+import com.hungh2002.service.utils.parameterUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -24,14 +25,15 @@ public class ProductService {
 
         List<Product> listNewProducts = new ArrayList<>();
         Gson gson = new Gson();
-        String orderByColumn = UrlParam.GetUrlParam(request.getParameter("order-by"));
-        String sortOrder = UrlParam.GetUrlParam(request.getParameter("sortOrder"));
-        String limit = UrlParam.GetUrlParam(request.getParameter("limit"));
+        String orderByColumn = parameterUtils.getParam(request.getParameter("order-by"));
+        String sortOrder = parameterUtils.getParam(request.getParameter("sortOrder"));
+        String condition = parameterUtils.getParam(request.getParameter("condition"));
+        String limit = parameterUtils.getParam(request.getParameter("limit"));
 
 
 
         ProductDAO productDAO = new ProductDAO();
-        try (ResultSet data = productDAO.queryData(orderByColumn, sortOrder, limit)) {
+        try (ResultSet data = productDAO.queryData(orderByColumn, sortOrder, condition, limit)) {
             while (data.next()) {
                 int id = data.getInt("id");
                 String name = data.getString("name");
@@ -44,7 +46,7 @@ public class ProductService {
                 listNewProducts.add(product);
             }
         } catch (Exception e) {
-            System.out.println(" ProductService err:" + e);
+            System.out.println(" ProductService error:" + e);
         }
 
         String json = gson.toJson(listNewProducts);
