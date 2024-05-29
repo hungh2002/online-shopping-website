@@ -1,4 +1,3 @@
 {
-    "javascript.format.insertSpaceAfterConstructor": true,
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
 }
