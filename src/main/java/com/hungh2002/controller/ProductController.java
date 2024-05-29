@@ -20,6 +20,6 @@ public class ProductController extends HttpServlet {
         // TODO Auto-generated method stub
 
         ProductService productService = new ProductService();
-        productService.getNewProducts(request, response);
+        productService.getProduct(request, response);
     }
 }
