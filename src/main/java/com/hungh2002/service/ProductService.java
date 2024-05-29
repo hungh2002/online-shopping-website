@@ -9,7 +9,6 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.hungh2002.model.product.Product;
 import com.hungh2002.model.product.ProductDAO;
-import com.hungh2002.service.utils.UrlParam;
 import com.hungh2002.service.utils.parameterUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,19 +20,21 @@ public class ProductService {
 
 
 
-    public void getNewProducts(HttpServletRequest request, HttpServletResponse response) {
+    public void getProduct(HttpServletRequest request, HttpServletResponse response) {
 
         List<Product> listNewProducts = new ArrayList<>();
         Gson gson = new Gson();
         String orderByColumn = parameterUtils.getParam(request.getParameter("order-by"));
         String sortOrder = parameterUtils.getParam(request.getParameter("sortOrder"));
-        String condition = parameterUtils.getParam(request.getParameter("condition"));
+        String productId = parameterUtils.getParam(request.getParameter("id"));
+        String condition = "id=?";
         String limit = parameterUtils.getParam(request.getParameter("limit"));
 
 
 
         ProductDAO productDAO = new ProductDAO();
-        try (ResultSet data = productDAO.queryData(orderByColumn, sortOrder, condition, limit)) {
+        try (ResultSet data =
+                productDAO.queryData(orderByColumn, sortOrder, condition, productId, limit)) {
             while (data.next()) {
                 int id = data.getInt("id");
                 String name = data.getString("name");

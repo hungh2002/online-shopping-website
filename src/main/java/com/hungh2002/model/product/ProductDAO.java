@@ -10,7 +10,8 @@ import com.hungh2002.service.utils.SQLStatement;
  */
 public class ProductDAO extends DBConnection {
 
-    public ResultSet queryData(String orderByColumn, String sortOrder, String where, String limit) {
+    public ResultSet queryData(String orderByColumn, String sortOrder, String where,
+            String productId, String limit) {
         ResultSet resultSet = null;
 
         // SQL statements
@@ -21,6 +22,7 @@ public class ProductDAO extends DBConnection {
         // execute the SQL statement
         try {
             PreparedStatement query = connection.prepareStatement(sqlQueryString);
+            query.setString(1, productId);
             resultSet = query.executeQuery();
         } catch (Exception e) {
             // Print error if there is a problem
