@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * ProductController
  */
-@WebServlet("api/product")
+@WebServlet("/api/product")
 public class ProductController extends HttpServlet {
 
     @Override

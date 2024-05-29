@@ -1,16 +1,16 @@
 package com.hungh2002.service.utils;
 
 /**
- * GetUrlParam
+ * ParameterUtils
  */
-public class UrlParam {
+public class parameterUtils {
 
-    public static String GetUrlParam(String urlParam) {
+    public static String getParam(String param) {
         String urlParamString = "";
-        if (urlParam == null) {
+        if (param == null) {
             urlParamString = "";
         } else {
-            urlParamString = urlParam;
+            urlParamString = param;
         }
         return urlParamString;
     }

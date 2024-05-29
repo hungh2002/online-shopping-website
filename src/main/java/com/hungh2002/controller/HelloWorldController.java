@@ -28,6 +28,7 @@ public class HelloWorldController extends HttpServlet {
 	// HttpServlet#doDetele(HttpServletRequest request, HttpServletResponse
 	// response) {}
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Send to logical processor (service)

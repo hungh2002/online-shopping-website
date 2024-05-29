@@ -6,7 +6,6 @@
     -->
     <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-
         <!DOCTYPE html>
         <html lang="en">
 
@@ -14,7 +13,7 @@
                 <meta charset="UTF-8">
                 <meta name="viewport"
                     content="width=device-width, initial-scale=1.0">
-                <title>HomePage</title>
+                <title>Sign up/in/out</title>
                 <link rel="stylesheet" type="text/css"
                     href="${pageContext.request.contextPath}/view/resources/css/style.css">
                 <link
@@ -29,22 +28,23 @@
                     <%@ include file="../component/header.jsp" %>
                 </header>
 
-                <div>
-                    <c:forEach items="${pageContext.request.cookies}" var="c">
-                        AA ${c.name} - ${c.value}<br>
-                    </c:forEach>
-                    ${cookie.rememberMe.value}
-                </div>
-
                 <section class="container">
-                    <%@ include file="../component/newReleases.jsp" %>
+                    <div id="sign-in">
+                        <%@ include file="../component/signIn.jsp" %>
+                    </div>
+                    <div id="sign-up" style="display: none;">
+                        <%@ include file="../component/signUp.jsp" %>
+                    </div>
+                    <button type="button" class="btn btn-link"
+                        id="toggleShowSignInOrSignOut">Sign
+                        up</button>
                 </section>
 
                 <footer class="container-fluid">
                     <%@ include file="../component/footer.jsp" %>
                 </footer>
 
-                <!-- include js -->
+                <!-- inclue js -->
                 <script
                     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -52,7 +52,8 @@
                 <script src="https://kit.fontawesome.com/c069b593b7.js"
                     crossorigin="anonymous"></script>
                 <script type="module"
-                    src="${pageContext.request.contextPath}/view/resources/js/index.js"></script>
+                    src="${pageContext.request.contextPath}/view/resources/js/auth.js">
+                    </script>
             </body>
 
-        </html>;
+        </html>
