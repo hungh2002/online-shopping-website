@@ -2,6 +2,9 @@ package com.hungh2002.model.product;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.hungh2002.config.DBConnection;
 import com.hungh2002.service.utils.SQLStatement;
 
@@ -10,23 +13,24 @@ import com.hungh2002.service.utils.SQLStatement;
  */
 public class ProductDAO extends DBConnection {
 
-    public ResultSet queryData(String orderByColumn, String sortOrder, String where,
-            String productId, String limit) {
+    public ResultSet queryData(LinkedHashMap<String, String> args) {
         ResultSet resultSet = null;
 
         // SQL statements
-        // --> "SELECT * FROM products ORDER BY ${orderByColumn} ${sortOrder} LIMIT ${limit}"
-        String sqlQueryString =
-                SQLStatement.select("*", "products", orderByColumn, sortOrder, where, limit);
-
+        // --> "SELECT ${column} FROM ${table} ORDER BY ${orderBy} LIMIT ${limit} WHERE id=${id}"
+        String sqlQueryString = SQLStatement.select(args);
         // execute the SQL statement
         try {
             PreparedStatement query = connection.prepareStatement(sqlQueryString);
-            query.setString(1, productId);
+
+            if (args.get("product-id") != null) {
+                query.setString(1, args.get("product-id"));
+            }
+
             resultSet = query.executeQuery();
         } catch (Exception e) {
             // Print error if there is a problem
-            System.out.println("productDAOSQL: " + e);
+            System.out.println("ERROR: productDAO -> SQL -> Query: " + e);
         }
         return resultSet;
     }

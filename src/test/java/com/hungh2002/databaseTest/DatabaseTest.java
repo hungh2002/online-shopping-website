@@ -1,11 +1,9 @@
-package com.seifu.database;
+package com.hungh2002.databaseTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-
+import org.junit.jupiter.api.Test;
 import com.hungh2002.config.DBConnection;
 import com.hungh2002.model.databaseConnectionTest.DatabaseTestDAO;
 
@@ -13,11 +11,11 @@ import com.hungh2002.model.databaseConnectionTest.DatabaseTestDAO;
 // --> "https://junit.org/junit5/docs/current/user-guide/"
 public class DatabaseTest {
 
-	@Test
 	@BeforeAll
-	public void DBConnectionTest() {
+	static void DBConnectionTest() {
 		DBConnection connection = new DBConnection();
 		assertNotNull(connection);
+		connection.close();
 	}
 
 	@Test
@@ -25,6 +23,7 @@ public class DatabaseTest {
 		DatabaseTestDAO databaseTest = new DatabaseTestDAO();
 		databaseTest.insertData();
 		databaseTest.updateData();
+		databaseTest.close();
 	}
 
 	@Test
@@ -32,11 +31,11 @@ public class DatabaseTest {
 		DatabaseTestDAO databaseTest = new DatabaseTestDAO();
 		databaseTest.queryData();
 		databaseTest.queryDataWithCondition();
+		databaseTest.close();
 	}
 
-	@Test
 	@AfterAll
-	public void deleteDataTest() {
+	static void deleteDataTest() {
 		DatabaseTestDAO databaseTest = new DatabaseTestDAO();
 		databaseTest.deleteData();
 		databaseTest.close();

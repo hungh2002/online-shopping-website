@@ -1,43 +1,54 @@
 package com.hungh2002.service.utils;
 
+import java.util.Map;
+
 public class SQLStatement {
 
-    public static String select(String column, String tableName, String orderByColumn,
-            String sortOrder, String where, String limit) {
-        String orderByString;
-        String limitString;
-        String whereString;
+    public static String select(Map<String, String> args) {
 
-        if (limit == "") {
-            limitString = "";
+        String column;
+        if (args.get("column") != null) {
+            column = args.get("column");
         } else {
-            limitString = " LIMIT " + limit;
+            column = " * ";
         }
 
-        if (orderByColumn == "") {
-            orderByString = "";
+        String table = args.get("table");
+
+        String orderBy;
+        if (args.get("order-by") != null) {
+            orderBy = " ORDER BY " + args.get("order-by").replace("-", " ");
         } else {
-            orderByString = " ORDER BY " + orderByColumn;
-            if (sortOrder != "") {
-                orderByString = " ORDER BY " + orderByColumn + " " + sortOrder;
-            }
+            orderBy = "";
         }
 
-        if (where == "") {
-            whereString = "";
+        String where;
+        String condition;
+        if (args.get("condition") != null) {
+            where = " WHERE ";
+            condition = args.get("condition") + "=? ";
         } else {
-            whereString = " WHERE " + where;
+            where = "";
+            condition = "";
         }
 
-        return "SELECT " + column + " FROM " + tableName + orderByString + whereString
-                + limitString;
+        String limit;
+        if (args.get("limit") != null) {
+            limit = " LIMIT " + args.get("limit");
+        } else {
+            limit = "";
+        }
+
+        return " SELECT " + column + " FROM " + table + orderBy + limit + where + condition;
+
     }
 
+    public static String insert(Map<String, String> args) {
 
+        String table = args.get("table");
+        String column = args.get("column");
+        String data = args.get("data");
 
-    public static String insert(String tableName, String column, String data) {
-
-
-        return "INSERT INTO " + tableName + " (" + column + ") VALUES (" + data + ")";
+        return "INSERT INTO " + table + " ( " + column + " ) VALUES ( " + data + " ) ";
     }
 }
