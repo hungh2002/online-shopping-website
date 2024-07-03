@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-
-    Configuration file for UrlRewriteFilter
-    http://www.tuckey.org/urlrewrite/
-
- -->
+<!-- Configuration file for UrlRewriteFilter http://www.tuckey.org/urlrewrite/ -->
 <urlrewrite>
 	<rule>
-		<note> The rule means that requests to /x will be redirected to /x.jsp the url will be rewritten. </note>
+		<note> The rule means that requests to /x will be redirected to /x.jsp
+			the url will be rewritten. </note>
 		<from>^/$</from>
 		<to type="forward">/view/page/index.jsp</to>
 	</rule>
 	<rule>
-		<note> The rule means that requests to /x will be redirected to /x.jsp the url will be rewritten. </note>
+		<note> The rule means that requests to /x will be redirected to /x.jsp
+			the url will be rewritten. </note>
 		<from>^/?([a-z]+)$</from>
 		<to type="forward">/view/page/$1.jsp</to>
 	</rule>

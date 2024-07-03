@@ -1,16 +1,21 @@
-<c:if test="${cookie.rememberMe.value == 'true'}">
-    <span id="check-login"></span>
-    <script type="module"
-        src="${pageContext.request.contextPath}/view/resources/js/checkLogin.js"></script>
-</c:if>
+<!-- https://jakarta.ee/specifications/tags/3.0/jakarta-tags-spec-3.0#overview
+         -> How to use Jakarta Standard Tag Library (JSTL)
+    -->
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:choose>
-    <c:when test="${sessionScope.username != null}">
-        <a class="nav-link" href="#">${sessionScope.username}</a>
-        <a class="nav-link"
-            href="${pageContext.request.contextPath}/api/customer?auth=sign-out">Sign
-            out</a>
-    </c:when>
-    <c:otherwise>
-        <a class="nav-link" href="/auth">Sign in</a>
-    </c:otherwise>
+	<c:when test="${sessionScope.username != null}">
+		<li class="nav-item">
+			<a class="nav-link" href="#">${sessionScope.username}</a>
+		</li>
+			<li class="nav-item">
+			<a class="nav-link"
+				href="${pageContext.request.contextPath}/api/customer?auth=sign-out">Sign
+				out</a>
+			</li>
+	</c:when>
+<c:otherwise>
+		<li class="nav-item">
+			<a class="nav-link" href="/signIn">Sign in</a>
+		</li>
+	</c:otherwise>
 </c:choose>

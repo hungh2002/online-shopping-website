@@ -3,7 +3,8 @@ package com.hungh2002.model.customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import com.hungh2002.config.DBConnection;
 import com.hungh2002.service.utils.SQLStatement;
 
@@ -12,56 +13,61 @@ import com.hungh2002.service.utils.SQLStatement;
  */
 public class CustomerDAO extends DBConnection {
 
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            System.out.println("customerDAOSQL.close: " + e);
-        }
-    }
 
-    public ResultSet queryData(String orderByColumn, String sortOrder, String where,
-            List<String> auth, String limit) {
+
+    public ResultSet queryData(LinkedHashMap<String, String> args) {
         ResultSet resultSet = null;
 
         // SQL statements
-        // --> "SELECT * FROM products ORDER BY ${orderByColumn} ${sortOrder} LIMIT ${limit}"
-        String sqlQueryString =
-                SQLStatement.select("*", "customers", orderByColumn, sortOrder, where, limit);
+        // --> "SELECT ${column} FROM ${table} ORDER BY ${orderBy} LIMIT ${limit} WHERE id=${id}"
+        String sqlQueryString = SQLStatement.select(args);
 
         // execute the SQL statement
         try {
             PreparedStatement query = connection.prepareStatement(sqlQueryString);
-
-            for (int i = 0; i < auth.size(); i++) {
-                query.setString(i + 1, auth.get(i));
-            }
+            query.setString(1, args.get("username"));
 
             resultSet = query.executeQuery();
         } catch (Exception e) {
             // Print error if there is a problem
-            System.out.println("productDAOSQL -SELECT: " + e);
+            System.out.println("ERROR: ProductDAO -> SQL -> Query : " + e);
         }
         return resultSet;
     }
 
 
-    public void insertData(String username, String password, String sessionId) {
+    public void insertData(LinkedHashMap<String, String> args) {
 
-        String column = "username, password, sessionId";
+        String valueNumbers = "";
+        for (int i = 0; i < args.size() - 2; i++) {
+            valueNumbers = valueNumbers + " ?,";
+        }
+        valueNumbers = valueNumbers.replaceAll(",$", "");
+        args.put("data", valueNumbers);
 
-        String sqlInsertString = SQLStatement.insert("customers", column, "?,?,?");
+        String sqlInsertString = SQLStatement.insert(args);
 
         try {
             PreparedStatement insert = connection.prepareStatement(sqlInsertString);
-            insert.setString(1, username);
-            insert.setString(2, password);
-            insert.setString(3, sessionId);
+
+            int valueNumbersIndex = 1;
+            for (Map.Entry<String, String> element : args.entrySet()) {
+                if (!element.getKey().equals("table") && !element.getKey().equals("column")
+                        && !element.getKey().equals("data")) {
+                    try {
+                        insert.setString(valueNumbersIndex, element.getValue());
+                        valueNumbersIndex++;
+                    } catch (SQLException e) {
+                        // TODO Auto-generated catch block
+                        System.out.println("ERROR: customerDAO --> Insert --> forEach: " + e);
+                    }
+                }
+            }
+
             insert.executeUpdate();
         } catch (Exception e) {
             // Print error if there is a problem
-            System.out.println("customerDAOSQL: " + e);
+            System.out.println("ERROR: customerDAO --> Insert: " + e);
         }
     }
 }
