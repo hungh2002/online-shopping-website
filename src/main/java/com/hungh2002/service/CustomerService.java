@@ -105,7 +105,6 @@ public class CustomerService {
             ResultSet data = customerDAO.queryData(params);
 
             if (data.next()) {
-
                 if (data.getString("password").equals(password)) {
                     session.setAttribute("username", username);
                 }

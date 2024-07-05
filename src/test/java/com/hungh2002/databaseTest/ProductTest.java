@@ -1,6 +1,7 @@
 package com.hungh2002.databaseTest;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import com.hungh2002.model.product.ProductDAO;
@@ -13,7 +14,7 @@ public class ProductTest {
     @Test
     public void queryDataProduct() {
         ProductDAO productDAO = new ProductDAO();
-        Map<String, String> data = new HashMap<>();
+        LinkedHashMap<String, String> data = new LinkedHashMap<>();
         data.put("column", "name");
         productDAO.queryData(data);
 

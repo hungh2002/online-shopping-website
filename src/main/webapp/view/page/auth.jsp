@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<form%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <!-- https://jakarta.ee/specifications/tags/3.0/jakarta-tags-spec-3.0#overview
          -> How to use Jakarta Standard Tag Library (JSTL)
     -->
-<a%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,18 +28,17 @@
 	</header>
 
 	<section class="container">
-		<form
-	action="${pageContext.request.contextPath}/api/customer?auth=sign-up"
-	method="post">
-	<h2>Sign Up</h2>
-	<label>Username: <input type="text" name="username"></label>
-	<br>
-	 <label>Password: <input type="password" name="password"></label>
-	 <br>
-	 <input type="submit" value="Submit">
-</form>
-
-		<a href="/signIn">Sign in</a>
+        <c:choose>
+            <c:when test="${param.auth == 'sign-in'}">
+                <%@ include file="../component/signIn.jsp"%>
+            </c:when>
+            <c:when test="${param.auth == 'sign-up'}">
+                <%@ include file="../component/signUp.jsp"%>
+            </c:when>
+            <c:otherwise>
+                <%@ include file="../component/profile.jsp"%>
+            </c:otherwise>
+        </c:choose>
 	</section>
 
 	<footer class="container-fluid">
@@ -53,6 +52,8 @@
 		crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/c069b593b7.js"
 		crossorigin="anonymous"></script>
+		<script type="module"
+	src="${pageContext.request.contextPath}/view/resources/js/Auth.js"></script>
 
 </body>
 
