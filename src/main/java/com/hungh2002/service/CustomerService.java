@@ -62,7 +62,7 @@ public class CustomerService {
 
         params.put("table", "customers");
         String password = request.getParameter("password");
-        params.put("column", "password");
+        params.put("column", "customer_id, password");
         String username = request.getParameter("username");
         params.put("condition", "username");
         params.put("username", username);
@@ -106,6 +106,8 @@ public class CustomerService {
 
             if (data.next()) {
                 if (data.getString("password").equals(password)) {
+                    String customerId = data.getString("customer_id");
+                    session.setAttribute("customer_id", customerId);
                     session.setAttribute("username", username);
                 }
                 // if (rememberMe.equals("true")) {

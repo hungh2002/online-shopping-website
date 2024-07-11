@@ -1,4 +1,4 @@
-<form%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <!-- https://jakarta.ee/specifications/tags/3.0/jakarta-tags-spec-3.0#overview

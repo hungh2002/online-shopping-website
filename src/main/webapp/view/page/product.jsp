@@ -42,8 +42,6 @@
 		crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/c069b593b7.js"
 		crossorigin="anonymous"></script>
-	<script type="module"
-		src="${pageContext.request.contextPath}/view/resources/js/product.js"></script>
-</body>
+	</body>
 
 </html>
