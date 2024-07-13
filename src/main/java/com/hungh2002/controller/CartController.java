@@ -22,4 +22,12 @@ public class CartController extends HttpServlet {
         CartService cartService = new CartService();
         cartService.getCart(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        CartService cartService = new CartService();
+        cartService.addProductToCart(req, resp);
+    }
 }

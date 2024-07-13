@@ -38,10 +38,13 @@ public class CustomerDAO extends DBConnection {
 
     public void insertData(LinkedHashMap<String, String> args) {
 
+        // Count the number of columns you want to insert data.
         String valueNumbers = "";
         for (int i = 0; i < args.size() - 2; i++) {
             valueNumbers = valueNumbers + " ?,";
         }
+
+        // "${x}, ${y}, ${z}," --> "${x}, ${y}, ${z}"
         valueNumbers = valueNumbers.replaceAll(",$", "");
         args.put("data", valueNumbers);
 
@@ -63,6 +66,7 @@ public class CustomerDAO extends DBConnection {
                     }
                 }
             }
+            valueNumbersIndex = 1;
 
             insert.executeUpdate();
         } catch (Exception e) {

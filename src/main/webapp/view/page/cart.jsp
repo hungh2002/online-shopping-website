@@ -29,7 +29,7 @@
 	</header>
 
 	<section class="container">
-		<%@ include file="../component/showMyCart.jsp"%>
+		<%@ include file="../component/showMyCart.jsp" %>
 	</section>
 
 	<footer class="container-fluid">

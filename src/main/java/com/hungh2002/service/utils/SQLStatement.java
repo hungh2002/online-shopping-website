@@ -51,4 +51,13 @@ public class SQLStatement {
 
         return "INSERT INTO " + table + " ( " + column + " ) VALUES ( " + data + " ) ";
     }
+
+    public static String update(Map<String, String> args) {
+
+        String table = args.get("table");
+        String column = args.get("column");
+        String condition = args.get("condition");
+
+        return "UPDATE " + table + " SET " + column + " =? " + " WHERE " + condition + " = ?";
+    }
 }

@@ -5,10 +5,6 @@
 	,com.hungh2002.config.environmentVariable.Env
 "%>
 
-<!-- https://jakarta.ee/specifications/tags/3.0/jakarta-tags-spec-3.0#overview
-         -> How to use Jakarta Standard Tag Library (JSTL)
-    -->
-<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
 <div class="row">
 	<div class="row row-cols-1 row-cols-md-3 g-4" id="product-information">
@@ -24,13 +20,16 @@
 
 				<c:forEach var="item" items="${products}">
 					<div class="col">
-						<a href="/product?product-id=${ item.id }" class="card h-100 card-size">
+						<div href="/product?product-id=${ item.id }" class="card h-100 card-size">
 						  <img src=${ item.image } class="card-img-top" alt="...">
 						  <div class="card-body">
-							<h5 class="card-title"> ${ item.name } (${ item.price }$) </h5>
+							<h5 class="card-title"> ${ item.name } (${ item.price }$)</h5>
+							<span id="quantity"> ${item.quantity}</span>
 						  </div>
-						</a>
+						</div>
 					  </div>
 				</c:forEach>
+
+				<button id="add-to-cart">Add to cart</button>
 	</div>
 </div>

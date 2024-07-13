@@ -48,7 +48,7 @@ public class CustomerService {
                 customerDAO.insertData(params);
             }
         } catch (Exception e) {
-            System.out.println("ERROR: ProductService --> SignUp: " + e);
+            System.out.println("ERROR: customerService --> SignUp: " + e);
         } finally {
             customerDAO.close();
 
@@ -107,7 +107,7 @@ public class CustomerService {
             if (data.next()) {
                 if (data.getString("password").equals(password)) {
                     String customerId = data.getString("customer_id");
-                    session.setAttribute("customer_id", customerId);
+                    session.setAttribute("customer-id", customerId);
                     session.setAttribute("username", username);
                 }
                 // if (rememberMe.equals("true")) {
