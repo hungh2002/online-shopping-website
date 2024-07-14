@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import com.hungh2002.model.customer.Customer;
 import com.hungh2002.model.customer.CustomerDAO;
 import com.hungh2002.service.utils.parameterUtils;
 import jakarta.servlet.ServletException;
@@ -20,54 +21,31 @@ import jakarta.servlet.http.HttpSession;
  */
 public class CustomerService {
 
-    public void signUp(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-
+    public String signUp(String username, String password) {
+        Customer customer = null;
+        String status = null;
         // HttpSession session = request.getSession();
         // String sessionId = session.getId();
 
-        LinkedHashMap<String, String> params = new LinkedHashMap<>();
-        params.put("table", "customers");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        params.put("column", "1");
-        params.put("condition", "username");
-        params.put("username", username);
-        params.put("password", password);
-
         CustomerDAO customerDAO = new CustomerDAO();
-
         try {
-            ResultSet accountEsxists = customerDAO.queryData(params);
-            if (accountEsxists.next()) {
-                System.out.println("Account already exists");
+            if (customerDAO.exists("username", username) == true) {
+                status = "Account already exists";
             } else {
-                params.replace("column", "username, password");
-                params.remove("condition");
-                customerDAO.insertData(params);
+                customerDAO.save(new Customer(username, password));
+                status = "Account created successfully";
             }
         } catch (Exception e) {
-            System.out.println("ERROR: customerService --> SignUp: " + e);
+            System.out.println("ERROR: customerService --> SignUp() : " + e);
         } finally {
             customerDAO.close();
-
         }
+        return status;
     }
 
-    public void signIn(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        LinkedHashMap<String, String> params = new LinkedHashMap<>();
-
-        params.put("table", "customers");
-        String password = request.getParameter("password");
-        params.put("column", "customer_id, password");
-        String username = request.getParameter("username");
-        params.put("condition", "username");
-        params.put("username", username);
-
-        HttpSession session = request.getSession();
+    public String signIn(HttpSession session, String username, String password) {
+        Customer customer = null;
+        String status = null;
 
         // String rememberMe = parameterUtils.getParam(request.getParameter("rememberMe"));
         // Cookie[] cookies = request.getCookies();
@@ -100,34 +78,34 @@ public class CustomerService {
         // }
 
         CustomerDAO customerDAO = new CustomerDAO();
-
         try {
-            ResultSet data = customerDAO.queryData(params);
+            customer = customerDAO.findByUsername(username);
 
-            if (data.next()) {
-                if (data.getString("password").equals(password)) {
-                    String customerId = data.getString("customer_id");
-                    session.setAttribute("customer-id", customerId);
-                    session.setAttribute("username", username);
-                }
+            if (customer.getPassword().equals(password)) {
+                session.setAttribute("customerId", customer.getCustomerId());
+                session.setAttribute("username", customer.getUsername());
+                status = "Sign in success";
+
                 // if (rememberMe.equals("true")) {
                 // Cookie sessionIdCookie = new Cookie("sessionId", data.getString("sessionId"));
                 // sessionIdCookie.setMaxAge(60 * 60 * 24 * 365 * 10);
                 // sessionIdCookie.setPath("/");
                 // response.addCookie(sessionIdCookie);
                 // }
+            } else {
+                status = "Sign in failed";
             }
         } catch (Exception e) {
-            System.out.println("ERROR: CustomerService --> SiginIn: " + e);
+            System.out.println("ERROR: CustomerService --> SignIn() : " + e);
         } finally {
             customerDAO.close();
         }
+
+        return status;
     }
 
-    public void signOut(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public void signOut(HttpSession session) {
 
-        HttpSession session = request.getSession();
         session.removeAttribute("username");
 
         // Cookie[] cookies = request.getCookies();

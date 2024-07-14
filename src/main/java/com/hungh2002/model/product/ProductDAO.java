@@ -1,38 +1,53 @@
 package com.hungh2002.model.product;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import com.hungh2002.config.DBConnection;
-import com.hungh2002.service.utils.SQLStatement;
+import java.sql.Timestamp;
+import com.hungh2002.service.utils.SQLUtils.SQLUtils;
 
 /**
  * ProductDAO
  */
-public class ProductDAO extends DBConnection {
+public class ProductDAO extends SQLUtils<Product> {
 
-    public ResultSet queryData(LinkedHashMap<String, String> args) {
-        ResultSet resultSet = null;
+    public ProductDAO() {
+        super("products");
+    }
 
-        // SQL statements
-        // --> "SELECT ${column} FROM ${table} ORDER BY ${orderBy} LIMIT ${limit} WHERE id=${id}"
-        String sqlQueryString = SQLStatement.select(args);
-        // execute the SQL statement
+    @Override
+    public Product setResultSetToObject(ResultSet resultSet) {
+        Product product = null;
+
         try {
-            PreparedStatement query = connection.prepareStatement(sqlQueryString);
+            long productId = resultSet.getLong("product_id");
+            String name = resultSet.getString("name");
+            String category = resultSet.getString("category");
+            double price = resultSet.getDouble("price");
+            String image = resultSet.getString("image");
+            Timestamp createAt = resultSet.getTimestamp("create_at");
+            product = new Product(productId, name, category, price, image, createAt);
 
-            if (args.get("product-id") != null) {
-                query.setString(1, args.get("product-id"));
-            }
-
-            resultSet = query.executeQuery();
         } catch (Exception e) {
-            // Print error if there is a problem
-            System.out.println("ERROR: productDAO -> SQL -> Query: " + e);
+            System.out.println("ProductDAO --> setResultSetToObject() : " + e);
         }
-        return resultSet;
+        return product;
+    }
+
+    @Override
+    public void save(Product record) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    }
+
+    @Override
+    public boolean update(Product record) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    @Override
+    public void insert(Product record) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insert'");
     }
 
 }

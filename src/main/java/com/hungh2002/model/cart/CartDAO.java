@@ -3,82 +3,178 @@ package com.hungh2002.model.cart;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import com.hungh2002.config.DBConnection;
-import com.hungh2002.service.utils.SQLStatement;
+import com.hungh2002.model.customer.Customer;
+import com.hungh2002.model.customer.CustomerDAO;
+import com.hungh2002.model.product.Product;
+import com.hungh2002.model.product.ProductDAO;
+import com.hungh2002.service.utils.SQLUtils.SQLStatement;
+import com.hungh2002.service.utils.SQLUtils.SQLUtils;
 
-public class CartDAO extends DBConnection {
-    public ResultSet queryData(LinkedHashMap<String, String> args) {
-        ResultSet resultSet = null;
+public class CartDAO extends SQLUtils<Cart> {
 
-        // SQL statements
-        // --> "SELECT ${column} FROM ${table} ORDER BY ${orderBy} LIMIT ${limit} WHERE
-        // id=${id}"
-        String sqlQueryString = SQLStatement.select(args);
-
-        // execute the SQL statement
-        try {
-            PreparedStatement query = connection.prepareStatement(sqlQueryString);
-            query.setString(1, args.get("customer-id"));
-            resultSet = query.executeQuery();
-        } catch (Exception e) {
-            // Print error if there is a problem
-            System.out.println("ERROR: CartDAO -> SQL -> Query : " + e);
-        }
-        return resultSet;
+    public CartDAO() {
+        super("cart");
     }
 
-    public void insertData(LinkedHashMap<String, String> args) {
+    public List<Cart> findByCustomerId(long customerId) {
+        List<Cart> records = new LinkedList<>();
 
-        // Count the number of columns you want to insert data.
-        String valueNumbers = "";
-        for (int i = 0; i < args.size() - 3; i++) {
-            valueNumbers = valueNumbers + " ?,";
+        Map<String, String> mapData = new HashMap<>();
+        mapData.put("table", table);
+        mapData.put("condition", " customer_id = ? ");
+
+        String sqlQueryString = SQLStatement.select(mapData);
+        try {
+            PreparedStatement query = connection.prepareStatement(sqlQueryString);
+            query.setLong(1, customerId);
+            ResultSet resultSet = query.executeQuery();
+
+            while (resultSet.next()) {
+                Cart record = setResultSetToObject(resultSet);
+                records.add(record);
+            }
+        } catch (Exception e) {
+            // Print error if there is a problem
+            System.out.println("ERROR: CartDAO --> findByCustomerId() : " + e);
         }
-        // " ${x}, ${y}, ${z}, " --> " ${x}, ${y}, ${z} "
-        valueNumbers = valueNumbers.replaceAll(",$", "");
-        args.put("data", valueNumbers);
+        return records;
+    }
 
-        String sqlInsertString = SQLStatement.insert(args);
+    public Cart findByCustomerIdAndProductId(long customerId, long productId) {
+        Cart record = null;
 
+        Map<String, String> mapData = new HashMap<>();
+        mapData.put("table", table);
+        mapData.put("condition", " customer_id = ? AND product_id = ? ");
+
+        String sqlQueryString = SQLStatement.select(mapData);
+        try {
+            PreparedStatement query = connection.prepareStatement(sqlQueryString);
+            query.setLong(1, customerId);
+            query.setLong(2, productId);
+            ResultSet resultSet = query.executeQuery();
+
+            while (resultSet.next()) {
+                record = setResultSetToObject(resultSet);
+            }
+        } catch (Exception e) {
+            // Print error if there is a problem
+            System.out.println("ERROR: CartDAO --> findByCustomerId() : " + e);
+        }
+        return record;
+    }
+
+    @Override
+    public boolean update(Cart cart) {
+        boolean updated = false;
+
+        long productId = cart.getProduct().getProductId();
+        long customerId = cart.getCustomer().getCustomerId();
+
+        if (exists(productId, customerId) == true) {
+            Map<String, String> mapData = new HashMap<>();
+            mapData.put("table", table);
+            mapData.put("column", " product_id = ?, customer_id = ?, quantity = ? ");
+            mapData.put("condition", " cart_id = ? ");
+
+            String sqlUpdateString = SQLStatement.update(mapData);
+            try {
+                PreparedStatement update = connection.prepareStatement(sqlUpdateString);
+
+                update.setLong(1, productId);
+                update.setLong(2, customerId);
+                update.setInt(3, cart.getQuantity());
+                long cartId = findByCustomerIdAndProductId(customerId, productId).getCartId();
+                update.setLong(4, cartId);
+                update.executeUpdate();
+
+                updated = true;
+
+            } catch (Exception e) {
+                System.out.println("ERROR: cartDAO --> Update() : " + e);
+            }
+        }
+
+        return updated;
+    }
+
+    @Override
+    public void insert(Cart record) {
+
+        Map<String, String> mapData = new HashMap<>();
+        mapData.put("table", table);
+        mapData.put("column", " product_id, customer_id, quantity ");
+        mapData.put("data", " ?, ?, ? ");
+
+        String sqlInsertString = SQLStatement.insert(mapData);
         try {
             PreparedStatement insert = connection.prepareStatement(sqlInsertString);
 
-            int valueNumbersIndex = 1;
-            for (Map.Entry<String, String> element : args.entrySet()) {
-                if (!element.getKey().equals("table") && !element.getKey().equals("column")
-                        && !element.getKey().equals("data")
-                        && !element.getKey().equals("condition")) {
-                    try {
-                        insert.setString(valueNumbersIndex, element.getValue());
-                        valueNumbersIndex++;
-                    } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        System.out.println("ERROR: cartDAO --> Insert --> forEach: " + e);
-                    }
-                }
-            }
-            valueNumbersIndex = 1;
+            insert.setLong(1, record.getProduct().getProductId());
+            insert.setLong(2, record.getCustomer().getCustomerId());
+            insert.setInt(3, record.getQuantity());
             insert.executeUpdate();
         } catch (Exception e) {
-            // Print error if there is a problem
-            System.out.println("ERROR: cartDAO --> Insert: " + e);
+            System.out.println("CustomerDAO --> save() : " + e);
         }
     }
 
-    public void updateData(LinkedHashMap<String, String> args) {
+    @Override
+    public Cart setResultSetToObject(ResultSet resultSet) {
+        Cart cart = null;
+        ProductDAO productDAO = new ProductDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
 
-        String sqlUpdateString = SQLStatement.update(args);
         try {
-            PreparedStatement update = connection.prepareStatement(sqlUpdateString);
+            long cartId = resultSet.getLong("cart_id");
 
-            update.setString(1, args.get("quantity"));
-            update.setString(2, args.get("cart-id"));
-            update.executeUpdate();
+            long productId = resultSet.getLong("product_id");
+            Product product = productDAO.findById(productId);
 
+            long customerId = resultSet.getLong("customer_id");
+            Customer customer = customerDAO.findById(customerId);
+
+            int quantity = resultSet.getInt("quantity");
+
+            cart = new Cart(cartId, product, customer, quantity);
         } catch (Exception e) {
-            System.out.println("ERROR: cartDAO --> Update: " + e);
+            System.out.println("CartDAO --> setResultSetToObject() : " + e);
+        } finally {
+            productDAO.close();
+            customerDAO.close();
         }
+        return cart;
+    }
+
+    public boolean exists(long productId, long customerId) {
+        boolean exists = false;
+
+        Map<String, String> mapData = new HashMap<>();
+        mapData.put("table", table);
+        mapData.put("column", "1");
+        mapData.put("condition", " product_id=? AND customer_id=? ");
+
+        String sqlQueryString = SQLStatement.select(mapData);
+        try {
+            PreparedStatement query = connection.prepareStatement(sqlQueryString);
+            query.setLong(1, productId);
+            query.setLong(2, customerId);
+            ResultSet resultSet = query.executeQuery();
+
+            if (resultSet.next() == true) {
+                exists = true;
+            }
+        } catch (Exception e) {
+            // Print error if there is a problem
+            System.out.println("ERROR: SQLUtils --> exists() : " + e);
+        }
+        return exists;
     }
 }

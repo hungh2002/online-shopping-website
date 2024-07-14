@@ -49,10 +49,10 @@
 
 				<c:forEach var="item" items="${products}">
 					<div class="col">
-						<a href="/product?product-id=${ item.id }" class="card h-100 card-size">
-						  <img src=${ item.image } class="card-img-top" alt="...">
+						<a href="/product?product-id=${ item.productId }" class="card h-100 card-size">
+						  <img src=${ item.image } class="card-img-top" alt="${item.name}">
 						  <div class="card-body">
-							<h5 class="card-title"> ${ item.name } (${ item.price }$) </h5>
+							<h5 class="card-title"> ${ item.name }: ${ item.price }$ </h5>
 						  </div>
 						</a>
 					  </div>

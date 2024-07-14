@@ -1,4 +1,4 @@
-package com.hungh2002.service.utils;
+package com.hungh2002.service.utils.SQLUtils;
 
 import java.util.Map;
 
@@ -6,11 +6,9 @@ public class SQLStatement {
 
     public static String select(Map<String, String> args) {
 
-        String column;
+        String column = " * ";
         if (args.get("column") != null) {
             column = args.get("column");
-        } else {
-            column = " * ";
         }
 
         String table = args.get("table");
@@ -22,24 +20,19 @@ public class SQLStatement {
             orderBy = "";
         }
 
-        String where;
         String condition;
         if (args.get("condition") != null) {
-            where = " WHERE ";
-            condition = args.get("condition") + "=? ";
+            condition = " WHERE " + args.get("condition");
         } else {
-            where = "";
             condition = "";
         }
 
-        String limit;
+        String limit = "";
         if (args.get("limit") != null) {
             limit = " LIMIT " + args.get("limit");
-        } else {
-            limit = "";
         }
 
-        return " SELECT " + column + " FROM " + table + orderBy + limit + where + condition;
+        return " SELECT " + column + " FROM " + table + orderBy + limit + condition;
 
     }
 
@@ -56,8 +49,8 @@ public class SQLStatement {
 
         String table = args.get("table");
         String column = args.get("column");
-        String condition = args.get("condition");
+        String condition = " WHERE " + args.get("condition");
 
-        return "UPDATE " + table + " SET " + column + " =? " + " WHERE " + condition + " = ?";
+        return "UPDATE " + table + " SET " + column + condition;
     }
 }

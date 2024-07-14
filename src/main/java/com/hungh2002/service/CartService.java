@@ -15,6 +15,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.hungh2002.model.cart.Cart;
 import com.hungh2002.model.cart.CartDAO;
+import com.hungh2002.model.customer.Customer;
+import com.hungh2002.model.customer.CustomerDAO;
 import com.hungh2002.model.product.Product;
 import com.hungh2002.model.product.ProductDAO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,135 +28,62 @@ import jakarta.servlet.http.HttpSession;
  */
 public class CartService {
 
-    public void getCart(HttpServletRequest request, HttpServletResponse response) {
-
-
-        LinkedHashMap<String, String> params = new LinkedHashMap<>();
-
-        params.put("table", "cart");
-        String column = request.getParameter("column");
-        params.put("column", column);
-
-        String orderBy = request.getParameter("order-by");
-        params.put("order-by", orderBy);
-
-        String customerId = request.getParameter("customer-id");
-        if (customerId != null) {
-            params.put("condition", "customer_id");
-        }
-        params.put("customer-id", customerId);
-
-        String limit = request.getParameter("limit");
-        params.put("limit", limit);
-
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    public List<Cart> getCartList(long customerId) {
+        List<Cart> cartList = null;
 
         CartDAO cartDAO = new CartDAO();
-        ProductDAO productDAO = new ProductDAO();
-
-        LinkedHashMap<String, String> productMap = new LinkedHashMap<>();
-        productMap.put("table", "products");
-        productMap.put("column", null);
-        productMap.put("condition", "product_id");
-        productMap.put("product-id", null);
-
-        List<Cart> listCart = new ArrayList<>();
-
         try {
-            ResultSet data = cartDAO.queryData(params);
-            Product product = new Product();
-
-            while (data.next()) {
-                int cartId = data.getInt("cart_id");
-                String productId = data.getString("product_id");
-
-                try {
-                    productMap.replace("product-id", productId);
-                    ResultSet productData = productDAO.queryData(productMap);
-
-                    while (productData.next()) {
-
-                        product.setId(productData.getInt("product_id"));
-                        product.setName(productData.getString("name"));
-                        product.setCategory(productData.getString("category"));
-                        product.setPrice(productData.getDouble("price"));
-                        product.setImage(productData.getString("image"));
-                        System.out.println(product.getImage());
-                        product.setCreateAt(data.getTimestamp("create_at"));
-                    }
-                } catch (Exception e) {
-
-                    System.out.println(" CartService --> Product error:" + e);
-                }
-
-                listCart.add(new Cart(cartId, null, product, data.getInt("quantity")));
-            }
+            cartList = cartDAO.findByCustomerId(customerId);
         } catch (Exception e) {
-            System.out.println(" ProductService error:" + e);
+            System.out.println(" ProductService --> getCart() :" + e);
         } finally {
-            productDAO.close();
             cartDAO.close();
         }
 
-        String json = gson.toJson(listCart);
-
-        try (PrintWriter printWriter = response.getWriter()) {
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            printWriter.print(json);
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            System.out.println("Send Json Error: " + e);
-        }
-
+        return cartList;
     }
 
-    public void addProductToCart(HttpServletRequest request, HttpServletResponse response) {
+    public List<Cart> getCart(long productId, long customerId) {
+        List<Cart> cartList = new ArrayList<>();
 
-        LinkedHashMap<String, String> params = new LinkedHashMap<>();
-        params.put("table", "cart");
-        params.put("column", null);
-
-        String productId = request.getParameter("product-id");
-        params.put("product-id", productId);
-
-        String customerId = request.getParameter("customer-id");
-        if (customerId != null) {
-            params.put("condition", "customer_id");
+        CartDAO cartDAO = new CartDAO();
+        try {
+            Cart cart = cartDAO.findByCustomerIdAndProductId(customerId, productId);
+            cartList.add(cart);
+        } catch (Exception e) {
+            System.out.println(" ProductService --> getCart() :" + e);
+        } finally {
+            cartDAO.close();
         }
-        params.put("customer-id", customerId);
 
-        String quantity = request.getParameter("quantity");
-        params.put("quantity", quantity);
+        return cartList;
+    }
+
+    public void addProductToCart(long productId, long customerId, int quantity) {
 
 
         CartDAO cartDAO = new CartDAO();
-
+        ProductDAO productDAO = new ProductDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
         try {
-            ResultSet data = cartDAO.queryData(params);
-            boolean updated = false;
-            while (data.next()) {
-                if (productId.equals(data.getString("product_id"))) {
-                    params.replace("quantity", quantity);
-                    params.replace("column", "quantity");
-                    params.replace("condition", "cart_id");
-                    String cartId = data.getString("cart_id");
-                    params.put("cart-id", cartId);
-                    cartDAO.updateData(params);
-                    updated = true;
-                }
+            Cart exampleCart = cartDAO.findByCustomerIdAndProductId(customerId, productId);
+            if (exampleCart != null) {
+                quantity = quantity + exampleCart.getQuantity();
             }
 
-            if (updated == false) {
-                params.replace("column", "product_id, customer_id, quantity");
-                cartDAO.insertData(params);
-            }
+            Product product = productDAO.findById(productId);
+
+            Customer customer = customerDAO.findById(customerId);
+
+            Cart cart = new Cart(product, customer, quantity);
+            cartDAO.save(cart);
 
         } catch (Exception e) {
             System.out.println("ERROR: CartService --> addProductToCart: " + e);
         } finally {
             cartDAO.close();
+            productDAO.close();
+            customerDAO.close();
         }
 
     }
