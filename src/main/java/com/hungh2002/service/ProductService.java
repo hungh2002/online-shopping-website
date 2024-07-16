@@ -49,7 +49,8 @@ public class ProductService {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
         ProductDAO productDAO = new ProductDAO();
-        try (ResultSet data = productDAO.queryData(params)) {
+        try {
+            ResultSet data = productDAO.queryData(params);
             while (data.next()) {
                 int id = data.getInt("product_id");
                 String name = data.getString("name");

@@ -5,7 +5,10 @@
 <c:choose>
 	<c:when test="${sessionScope.username != null}">
 		<li class="nav-item">
-			<a class="nav-link" href="#">${sessionScope.username}</a>
+			<a class="nav-link" href="/auth">${sessionScope.username}</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="/cart">Cart</a>
 		</li>
 			<li class="nav-item">
 			<button class="nav-link" id="sign-out-button">Sign out</button>

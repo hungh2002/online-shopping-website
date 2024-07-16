@@ -6,13 +6,14 @@
     -->
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product</title>
+<title>HomePage</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/view/resources/css/style.css">
 <link
@@ -28,7 +29,7 @@
 	</header>
 
 	<section class="container">
-		<%@ include file="../component/productInformation.jsp"%>
+		<%@ include file="../component/showMyCart.jsp" %>
 	</section>
 
 	<footer class="container-fluid">
@@ -42,8 +43,7 @@
 		crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/c069b593b7.js"
 		crossorigin="anonymous"></script>
-		<script type="module"
-		src="${pageContext.request.contextPath}/view/resources/js/Cart.js"></script>
 	</body>
 
 </html>
+;

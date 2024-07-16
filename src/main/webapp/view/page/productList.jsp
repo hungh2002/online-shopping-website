@@ -5,6 +5,7 @@
 	import="com.hungh2002.service.utils.jspUtils.JsonUtils
     , java.util.List
     , com.hungh2002.model.product.Product
+	, com.hungh2002.config.environmentVariable.Env
 "%>
 
 <!-- https://jakarta.ee/specifications/tags/3.0/jakarta-tags-spec-3.0#overview
@@ -39,7 +40,7 @@
 			<div class="row row-cols-1 row-cols-md-5 g-4"	>
 		<%
 			try {
-				List<Product> products = JsonUtils.<Product>Serialization("http://localhost:8080/api/product?order-by=create_at-desc");
+				List<Product> products = JsonUtils.<Product>Serialization(Env.BASE_URL + "/api/product?order-by=create_at-desc");
 				pageContext.setAttribute("products", products);
 			} catch (Exception e) {
 				System.out.println("ERROR: productList.jsp" + e);
