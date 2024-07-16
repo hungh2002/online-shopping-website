@@ -1,16 +1,21 @@
-<c:if test="${cookie.rememberMe.value == 'true'}">
-    <span id="check-login"></span>
-    <script type="module"
-        src="${pageContext.request.contextPath}/view/resources/js/checkLogin.js"></script>
-</c:if>
 <c:choose>
-    <c:when test="${sessionScope.username != null}">
-        <a class="nav-link" href="#">${sessionScope.username}</a>
-        <a class="nav-link"
-            href="${pageContext.request.contextPath}/api/customer?auth=sign-out">Sign
-            out</a>
-    </c:when>
-    <c:otherwise>
-        <a class="nav-link" href="/auth">Sign in</a>
-    </c:otherwise>
+	<c:when test="${sessionScope.username != null}">
+		<li class="nav-item">
+			<a class="nav-link" href="/auth">${sessionScope.username}</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="/cart">Cart</a>
+		</li>
+			<li class="nav-item">
+			<button class="nav-link" id="sign-out-button">Sign out</button>
+			</li>
+	</c:when>
+<c:otherwise>
+		<li class="nav-item">
+			<a class="nav-link" href="/auth?auth=sign-in">Sign in</a>
+		</li>
+	</c:otherwise>
 </c:choose>
+
+<script type="module"
+		src="${pageContext.request.contextPath}/view/resources/js/SignOut.js"></script>

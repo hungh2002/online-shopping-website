@@ -1,16 +1,9 @@
 package com.hungh2002.service;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.Gson;
 import com.hungh2002.model.product.Product;
 import com.hungh2002.model.product.ProductDAO;
-import com.hungh2002.service.utils.UrlParam;
-import com.hungh2002.service.utils.parameterUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -19,45 +12,57 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class ProductService {
 
-
-
-    public void getNewProducts(HttpServletRequest request, HttpServletResponse response) {
-
-        List<Product> listNewProducts = new ArrayList<>();
-        Gson gson = new Gson();
-        String orderByColumn = parameterUtils.getParam(request.getParameter("order-by"));
-        String sortOrder = parameterUtils.getParam(request.getParameter("sortOrder"));
-        String condition = parameterUtils.getParam(request.getParameter("condition"));
-        String limit = parameterUtils.getParam(request.getParameter("limit"));
-
-
-
+    public List<Product> getProduct(long productId) {
+        List<Product> productsList = new ArrayList<>();
         ProductDAO productDAO = new ProductDAO();
-        try (ResultSet data = productDAO.queryData(orderByColumn, sortOrder, condition, limit)) {
-            while (data.next()) {
-                int id = data.getInt("id");
-                String name = data.getString("name");
-                String category = data.getString("category");
-                double price = data.getDouble("price");
-                String image = data.getString("image");
-                Timestamp createAt = data.getTimestamp("createAt");
-                Product product = new Product(id, name, category, price, image, createAt);
+        try {
+            Product product = productDAO.findById(productId);
+            productsList.add(product);
+        } catch (Exception e) {
+            System.out.println(" ProductService --> getProduct() : " + e);
+        } finally {
+            productDAO.close();
+        }
 
-                listNewProducts.add(product);
+        return productsList;
+    }
+
+    public List<Product> getProductsList(String orderBy) {
+
+        List<Product> productsList = null;
+        ProductDAO productDAO = new ProductDAO();
+        try {
+            if (orderBy != null) {
+                productsList = productDAO.findAll(orderBy);
+            } else {
+                productsList = productDAO.findAll();
             }
         } catch (Exception e) {
-            System.out.println(" ProductService error:" + e);
+            System.out.println(" ProductService --> getProductsList() : " + e);
+        } finally {
+            productDAO.close();
         }
 
-        String json = gson.toJson(listNewProducts);
+        return productsList;
+    }
 
-        try (PrintWriter printWriter = response.getWriter()) {
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            printWriter.print(json);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            System.out.println("Send Json Error: " + e);
+
+    public List<Product> getProductsListWithLimit(int limit, String orderBy) {
+
+        List<Product> productsList = null;
+        ProductDAO productDAO = new ProductDAO();
+        try {
+            if (orderBy != null) {
+                productsList = productDAO.findAllWithLimit(limit, orderBy);
+            } else {
+                productsList = productDAO.findAllWithLimit(limit);
+            }
+        } catch (Exception e) {
+            System.out.println(" ProductService --> getProductsListWithLimit() : " + e);
+        } finally {
+            productDAO.close();
         }
+
+        return productsList;
     }
 }

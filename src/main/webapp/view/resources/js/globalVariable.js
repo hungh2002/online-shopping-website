@@ -1,1 +1,0 @@
-export const urlContextPath='http://localhost:8080';

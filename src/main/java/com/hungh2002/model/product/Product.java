@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  */
 public class Product {
 
-    private int id;
+    private long productId;
     private String name;
     private String category;
     private double price;
@@ -17,9 +17,14 @@ public class Product {
     public Product() {}
 
 
-    public Product(int id, String name, String category, double price, String image,
+    public Product(long productId, String name, String category, double price, String image,
             Timestamp createAt) {
-        this.id = id;
+
+        if (productId <= 0 || price <= 0) {
+            throw new IllegalArgumentException("Cannot be a negative number or 0");
+        }
+
+        this.productId = productId;
         this.name = name;
         this.category = category;
         this.price = price;
@@ -28,12 +33,15 @@ public class Product {
     }
 
 
-    public int getId() {
-        return this.id;
+    public long getProductId() {
+        return this.productId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setProductId(long productId) {
+        if (productId <= 0) {
+            throw new IllegalArgumentException("Cannot be a negative number or 0");
+        }
+        this.productId = productId;
     }
 
     public String getName() {
@@ -57,6 +65,9 @@ public class Product {
     }
 
     public void setPrice(double price) {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Cannot be a negative number or 0");
+        }
         this.price = price;
     }
 

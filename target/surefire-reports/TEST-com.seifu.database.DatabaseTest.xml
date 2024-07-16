@@ -1,64 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.seifu.database.DatabaseTest" time="0.007" tests="4" errors="1" skipped="0" failures="0">
-  <properties>
-    <property name="java.specification.version" value="21"/>
-    <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/home/hungh2002/Projects/demo-online-shopping-website/target/test-classes:/home/hungh2002/Projects/demo-online-shopping-website/target/classes:/home/hungh2002/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/home/hungh2002/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/hungh2002/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar:/home/hungh2002/.m2/repository/com/mysql/mysql-connector-j/8.4.0/mysql-connector-j-8.4.0.jar:/home/hungh2002/.m2/repository/com/google/protobuf/protobuf-java/3.25.1/protobuf-java-3.25.1.jar:/home/hungh2002/.m2/repository/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar:/home/hungh2002/.m2/repository/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/home/hungh2002/.m2/repository/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar:/home/hungh2002/.m2/repository/org/tuckey/urlrewritefilter/5.1.3/urlrewritefilter-5.1.3.jar:/home/hungh2002/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:"/>
-    <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="sun.arch.data.model" value="64"/>
-    <property name="java.vendor.url" value="https://openjdk.org/"/>
-    <property name="user.timezone" value="Asia/Tokyo"/>
-    <property name="os.name" value="Linux"/>
-    <property name="java.vm.specification.version" value="21"/>
-    <property name="sun.java.launcher" value="SUN_STANDARD"/>
-    <property name="user.country" value="US"/>
-    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-21-openjdk/lib"/>
-    <property name="sun.java.command" value="/home/hungh2002/Projects/demo-online-shopping-website/target/surefire/surefirebooter-20240516190404681_3.jar /home/hungh2002/Projects/demo-online-shopping-website/target/surefire 2024-05-16T19-04-04_268-jvmRun1 surefire-20240516190404681_1tmp surefire_0-20240516190404681_2tmp"/>
-    <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/home/hungh2002/Projects/demo-online-shopping-website/target/test-classes:/home/hungh2002/Projects/demo-online-shopping-website/target/classes:/home/hungh2002/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/home/hungh2002/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/hungh2002/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar:/home/hungh2002/.m2/repository/com/mysql/mysql-connector-j/8.4.0/mysql-connector-j-8.4.0.jar:/home/hungh2002/.m2/repository/com/google/protobuf/protobuf-java/3.25.1/protobuf-java-3.25.1.jar:/home/hungh2002/.m2/repository/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar:/home/hungh2002/.m2/repository/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/home/hungh2002/.m2/repository/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar:/home/hungh2002/.m2/repository/org/tuckey/urlrewritefilter/5.1.3/urlrewritefilter-5.1.3.jar:/home/hungh2002/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:"/>
-    <property name="sun.cpu.endian" value="little"/>
-    <property name="user.home" value="/home/hungh2002"/>
-    <property name="user.language" value="en"/>
-    <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="java.version.date" value="2024-04-16"/>
-    <property name="java.home" value="/usr/lib/jvm/java-21-openjdk"/>
-    <property name="file.separator" value="/"/>
-    <property name="basedir" value="/home/hungh2002/Projects/demo-online-shopping-website"/>
-    <property name="java.vm.compressedOopsMode" value="Zero based"/>
-    <property name="line.separator" value="&#10;"/>
-    <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/hungh2002/Projects/demo-online-shopping-website/target/surefire/surefirebooter-20240516190404681_3.jar"/>
-    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="java.runtime.version" value="21.0.3+9"/>
-    <property name="user.name" value="hungh2002"/>
-    <property name="stdout.encoding" value="UTF-8"/>
-    <property name="path.separator" value=":"/>
-    <property name="os.version" value="6.8.9-arch1-2"/>
-    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
-    <property name="file.encoding" value="UTF-8"/>
-    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
-    <property name="localRepository" value="/home/hungh2002/.m2/repository"/>
-    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
-    <property name="java.io.tmpdir" value="/tmp"/>
-    <property name="java.version" value="21.0.3"/>
-    <property name="user.dir" value="/home/hungh2002/Projects/demo-online-shopping-website"/>
-    <property name="os.arch" value="amd64"/>
-    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="native.encoding" value="UTF-8"/>
-    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
-    <property name="java.vm.info" value="mixed mode, sharing"/>
-    <property name="stderr.encoding" value="UTF-8"/>
-    <property name="java.vendor" value="N/A"/>
-    <property name="java.vm.version" value="21.0.3+9"/>
-    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="java.class.version" value="65.0"/>
-  </properties>
-  <testcase name="insertAndUpdateDataTest" classname="com.seifu.database.DatabaseTest" time="0.0"/>
-  <testcase name="queryDataTest" classname="com.seifu.database.DatabaseTest" time="0.0"/>
-  <testcase name="deleteDataTest" classname="com.seifu.database.DatabaseTest" time="0.002"/>
-  <testcase name="DBConnectionTest" classname="com.seifu.database.DatabaseTest" time="0.002">
-    <error message="org/junit/jupiter/api/Assertions" type="java.lang.NoClassDefFoundError"><![CDATA[java.lang.NoClassDefFoundError: org/junit/jupiter/api/Assertions
+<testsuite
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd"
+	version="3.0" name="com.seifu.database.DatabaseTest" time="0.007"
+	tests="4" errors="1" skipped="0" failures="0">
+	<properties>
+		<property name="java.specification.version" value="21" />
+		<property name="sun.jnu.encoding" value="UTF-8" />
+		<property name="java.class.path"
+			value="/home/hungh2002/Projects/demo-online-shopping-website/target/test-classes:/home/hungh2002/Projects/demo-online-shopping-website/target/classes:/home/hungh2002/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/home/hungh2002/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/hungh2002/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar:/home/hungh2002/.m2/repository/com/mysql/mysql-connector-j/8.4.0/mysql-connector-j-8.4.0.jar:/home/hungh2002/.m2/repository/com/google/protobuf/protobuf-java/3.25.1/protobuf-java-3.25.1.jar:/home/hungh2002/.m2/repository/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar:/home/hungh2002/.m2/repository/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/home/hungh2002/.m2/repository/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar:/home/hungh2002/.m2/repository/org/tuckey/urlrewritefilter/5.1.3/urlrewritefilter-5.1.3.jar:/home/hungh2002/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:" />
+		<property name="java.vm.vendor" value="Oracle Corporation" />
+		<property name="sun.arch.data.model" value="64" />
+		<property name="java.vendor.url" value="https://openjdk.org/" />
+		<property name="user.timezone" value="Asia/Tokyo" />
+		<property name="os.name" value="Linux" />
+		<property name="java.vm.specification.version" value="21" />
+		<property name="sun.java.launcher" value="SUN_STANDARD" />
+		<property name="user.country" value="US" />
+		<property name="sun.boot.library.path"
+			value="/usr/lib/jvm/java-21-openjdk/lib" />
+		<property name="sun.java.command"
+			value="/home/hungh2002/Projects/demo-online-shopping-website/target/surefire/surefirebooter-20240516190404681_3.jar /home/hungh2002/Projects/demo-online-shopping-website/target/surefire 2024-05-16T19-04-04_268-jvmRun1 surefire-20240516190404681_1tmp surefire_0-20240516190404681_2tmp" />
+		<property name="jdk.debug" value="release" />
+		<property name="surefire.test.class.path"
+			value="/home/hungh2002/Projects/demo-online-shopping-website/target/test-classes:/home/hungh2002/Projects/demo-online-shopping-website/target/classes:/home/hungh2002/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/home/hungh2002/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/hungh2002/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar:/home/hungh2002/.m2/repository/com/mysql/mysql-connector-j/8.4.0/mysql-connector-j-8.4.0.jar:/home/hungh2002/.m2/repository/com/google/protobuf/protobuf-java/3.25.1/protobuf-java-3.25.1.jar:/home/hungh2002/.m2/repository/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar:/home/hungh2002/.m2/repository/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/home/hungh2002/.m2/repository/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar:/home/hungh2002/.m2/repository/org/tuckey/urlrewritefilter/5.1.3/urlrewritefilter-5.1.3.jar:/home/hungh2002/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:" />
+		<property name="sun.cpu.endian" value="little" />
+		<property name="user.home" value="/home/hungh2002" />
+		<property name="user.language" value="en" />
+		<property name="java.specification.vendor"
+			value="Oracle Corporation" />
+		<property name="java.version.date" value="2024-04-16" />
+		<property name="java.home"
+			value="/usr/lib/jvm/java-21-openjdk" />
+		<property name="file.separator" value="/" />
+		<property name="basedir"
+			value="/home/hungh2002/Projects/demo-online-shopping-website" />
+		<property name="java.vm.compressedOopsMode"
+			value="Zero based" />
+		<property name="line.separator" value="&#10;" />
+		<property name="java.specification.name"
+			value="Java Platform API Specification" />
+		<property name="java.vm.specification.vendor"
+			value="Oracle Corporation" />
+		<property name="surefire.real.class.path"
+			value="/home/hungh2002/Projects/demo-online-shopping-website/target/surefire/surefirebooter-20240516190404681_3.jar" />
+		<property name="sun.management.compiler"
+			value="HotSpot 64-Bit Tiered Compilers" />
+		<property name="java.runtime.version" value="21.0.3+9" />
+		<property name="user.name" value="hungh2002" />
+		<property name="stdout.encoding" value="UTF-8" />
+		<property name="path.separator" value=":" />
+		<property name="os.version" value="6.8.9-arch1-2" />
+		<property name="java.runtime.name"
+			value="OpenJDK Runtime Environment" />
+		<property name="file.encoding" value="UTF-8" />
+		<property name="java.vm.name"
+			value="OpenJDK 64-Bit Server VM" />
+		<property name="localRepository"
+			value="/home/hungh2002/.m2/repository" />
+		<property name="java.vendor.url.bug"
+			value="https://bugreport.java.com/bugreport/" />
+		<property name="java.io.tmpdir" value="/tmp" />
+		<property name="java.version" value="21.0.3" />
+		<property name="user.dir"
+			value="/home/hungh2002/Projects/demo-online-shopping-website" />
+		<property name="os.arch" value="amd64" />
+		<property name="java.vm.specification.name"
+			value="Java Virtual Machine Specification" />
+		<property name="native.encoding" value="UTF-8" />
+		<property name="java.library.path"
+			value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib" />
+		<property name="java.vm.info" value="mixed mode, sharing" />
+		<property name="stderr.encoding" value="UTF-8" />
+		<property name="java.vendor" value="N/A" />
+		<property name="java.vm.version" value="21.0.3+9" />
+		<property name="sun.io.unicode.encoding"
+			value="UnicodeLittle" />
+		<property name="java.class.version" value="65.0" />
+	</properties>
+	<testcase name="insertAndUpdateDataTest"
+		classname="com.seifu.database.DatabaseTest" time="0.0" />
+	<testcase name="queryDataTest"
+		classname="com.seifu.database.DatabaseTest" time="0.0" />
+	<testcase name="deleteDataTest"
+		classname="com.seifu.database.DatabaseTest" time="0.002" />
+	<testcase name="DBConnectionTest"
+		classname="com.seifu.database.DatabaseTest" time="0.002">
+		<error message="org/junit/jupiter/api/Assertions"
+			type="java.lang.NoClassDefFoundError"><![CDATA[java.lang.NoClassDefFoundError: org/junit/jupiter/api/Assertions
 	at com.seifu.database.DatabaseTest.DBConnectionTest(DatabaseTest.java:20)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
@@ -92,5 +121,5 @@ Caused by: java.lang.ClassNotFoundException: org.junit.jupiter.api.Assertions
 	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
 	... 27 more
 ]]></error>
-  </testcase>
+	</testcase>
 </testsuite>
