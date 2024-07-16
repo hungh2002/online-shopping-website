@@ -8,35 +8,38 @@ import com.hungh2002.model.product.Product;
  */
 public class Cart {
 
-    private int id;
-    private Customer customer;
+    private long cartId;
     private Product product;
+    private Customer customer;
     private int quantity;
 
     public Cart() {}
 
-
-    public Cart(int id, Customer customer, Product product, int quantity) {
-        this.id = id;
-        this.customer = customer;
+    public Cart(Product product, Customer customer, int quantity) {
         this.product = product;
+        this.customer = customer;
         this.quantity = quantity;
     }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Customer getCustomer() {
-        return this.customer;
-    }
-
-    public void setCustomer(Customer customer) {
+    public Cart(long cartId, Product product, Customer customer, int quantity) {
+        if (cartId <= 0) {
+            throw new IllegalArgumentException("Cannot be a negative number or 0");
+        }
+        this.cartId = cartId;
+        this.product = product;
         this.customer = customer;
+        this.quantity = quantity;
+    }
+
+    public long getCartId() {
+        return this.cartId;
+    }
+
+    public void setCartId(long cartId) {
+        if (cartId <= 0) {
+            throw new IllegalArgumentException("Cannot be a negative number or 0");
+        }
+        this.cartId = cartId;
     }
 
     public Product getProduct() {
@@ -45,6 +48,14 @@ public class Cart {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Customer getCustomer() {
+        return this.customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public int getQuantity() {

@@ -5,7 +5,7 @@ package com.hungh2002.model.customer;
  */
 public class Customer {
 
-    private int id;
+    private long customerId;
     private String username;
     private String password;
     private String sessionId;
@@ -13,19 +13,30 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(int id, String username, String password, String sessionId) {
-        this.id = id;
+    public Customer(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public Customer(long customerId, String username, String password, String sessionId) {
+        if (customerId <= 0) {
+            throw new IllegalArgumentException("Cannot be a negative number or 0");
+        }
+        this.customerId = customerId;
         this.username = username;
         this.password = password;
         this.sessionId = sessionId;
     }
 
-    public int getId() {
-        return this.id;
+    public long getCustomerId() {
+        return this.customerId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCustomerId(long customerId) {
+        if (customerId <= 0) {
+            throw new IllegalArgumentException("Cannot be a negative number or 0");
+        }
+        this.customerId = customerId;
     }
 
     public String getUsername() {

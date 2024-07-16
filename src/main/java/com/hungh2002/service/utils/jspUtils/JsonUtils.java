@@ -17,23 +17,21 @@ import com.google.gson.reflect.TypeToken;
  */
 public class JsonUtils {
     public static <T> List<T> Serialization(String url) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(Timestamp.class, new TimeStampAdapter())
-                .create();
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
-
-        String response = "";
         List<T> data = new ArrayList<>();
 
+        Gson gson = new GsonBuilder().registerTypeAdapter(Timestamp.class, new TimeStampAdapter())
+                .create();
+
+        String response = null;
+
         try {
-            response = client.send(request, BodyHandlers.ofString()).body();
+            response = Fetch.get(url);
 
             TypeToken<List<T>> collectionType = new TypeToken<List<T>>() {};
             data = gson.fromJson(response, collectionType);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            System.out.println("ERROR: JsonUtils --> Serialization: " + e);
+            System.out.println("ERROR: JsonUtils --> Serialization(): " + e);
         }
         return data;
     }

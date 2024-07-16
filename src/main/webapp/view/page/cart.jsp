@@ -29,7 +29,9 @@
 	</header>
 
 	<section class="container">
-		<%@ include file="../component/showMyCart.jsp" %>
+		<c:if test="${sessionScope.username != null}">
+			<%@ include file="../component/showMyCart.jsp" %>
+		</c:if>
 	</section>
 
 	<footer class="container-fluid">

@@ -1,10 +1,17 @@
 import { urlContextPath } from './GlobalVariable.js'
 
-const signIn = async formData => {
-  await fetch(`${urlContextPath}/api/customer?auth=sign-in`, {
+const signIn = formData => {
+  fetch(`${urlContextPath}/api/customer?auth=sign-in`, {
     method: 'POST',
     body: formData
+  }).then(async data => {
+    let status = await data.text()
+    console.log(status)
+    if (status == 'Sign in success') {
+      window.location.href = `${urlContextPath}/auth`
+    } else {
+      window.location.href = `${urlContextPath}/auth?auth=sign-in`
+    }
   })
-  window.location.href = `${urlContextPath}/auth`
 }
 export default signIn

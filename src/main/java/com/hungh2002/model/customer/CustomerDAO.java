@@ -3,75 +3,80 @@ package com.hungh2002.model.customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import com.hungh2002.config.DBConnection;
-import com.hungh2002.service.utils.SQLStatement;
+import com.hungh2002.service.utils.SQLUtils.SQLStatement;
+import com.hungh2002.service.utils.SQLUtils.SQLUtils;
 
 /**
  * CustomerDAO
  */
-public class CustomerDAO extends DBConnection {
+public class CustomerDAO extends SQLUtils<Customer> {
 
 
 
-    public ResultSet queryData(LinkedHashMap<String, String> args) {
-        ResultSet resultSet = null;
-
-        // SQL statements
-        // --> "SELECT ${column} FROM ${table} ORDER BY ${orderBy} LIMIT ${limit} WHERE id=${id}"
-        String sqlQueryString = SQLStatement.select(args);
-
-        // execute the SQL statement
-        try {
-            PreparedStatement query = connection.prepareStatement(sqlQueryString);
-            query.setString(1, args.get("username"));
-
-            resultSet = query.executeQuery();
-        } catch (Exception e) {
-            // Print error if there is a problem
-            System.out.println("ERROR: ProductDAO -> SQL -> Query : " + e);
-        }
-        return resultSet;
+    public CustomerDAO() {
+        super("customers");
     }
 
+    public Customer findByUsername(String username) {
+        Customer record = null;
 
-    public void insertData(LinkedHashMap<String, String> args) {
+        Map<String, String> mapData = new HashMap<>();
+        mapData.put("table", table);
+        mapData.put("condition", " username = ? ");
 
-        // Count the number of columns you want to insert data.
-        String valueNumbers = "";
-        for (int i = 0; i < args.size() - 2; i++) {
-            valueNumbers = valueNumbers + " ?,";
+        String sqlQueryString = SQLStatement.select(mapData);
+        try {
+            PreparedStatement query = connection.prepareStatement(sqlQueryString);
+            query.setString(1, username);
+            ResultSet resultSet = query.executeQuery();
+
+            while (resultSet.next()) {
+                record = setResultSetToObject(resultSet);
+            }
+        } catch (Exception e) {
+            // Print error if there is a problem
+            System.out.println("ERROR: SQLUtils --> findAll() : " + e);
         }
+        return record;
+    }
 
-        // "${x}, ${y}, ${z}," --> "${x}, ${y}, ${z}"
-        valueNumbers = valueNumbers.replaceAll(",$", "");
-        args.put("data", valueNumbers);
+    @Override
+    public Customer setResultSetToObject(ResultSet resultSet) {
+        Customer customer = null;
 
-        String sqlInsertString = SQLStatement.insert(args);
+        try {
+            long customerId = resultSet.getLong("customer_id");
+            String username = resultSet.getString("username");
+            String password = resultSet.getString("password");
+            customer = new Customer(customerId, username, password, null);
 
+        } catch (Exception e) {
+            System.out.println("CustomerDAO --> setResultSetToObject() : " + e);
+        }
+        return customer;
+    }
+
+    @Override
+    public void save(Customer record) {
+
+        Map<String, String> mapData = new HashMap<>();
+        mapData.put("table", table);
+        mapData.put("column", " username, password ");
+        mapData.put("data", " ?, ? ");
+
+        String sqlInsertString = SQLStatement.insert(mapData);
         try {
             PreparedStatement insert = connection.prepareStatement(sqlInsertString);
 
-            int valueNumbersIndex = 1;
-            for (Map.Entry<String, String> element : args.entrySet()) {
-                if (!element.getKey().equals("table") && !element.getKey().equals("column")
-                        && !element.getKey().equals("data")) {
-                    try {
-                        insert.setString(valueNumbersIndex, element.getValue());
-                        valueNumbersIndex++;
-                    } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        System.out.println("ERROR: customerDAO --> Insert --> forEach: " + e);
-                    }
-                }
-            }
-            valueNumbersIndex = 1;
-
+            insert.setString(1, record.getUsername());
+            insert.setString(2, record.getPassword());
+            // insert.setString(3, record.getSessionId());
             insert.executeUpdate();
         } catch (Exception e) {
-            // Print error if there is a problem
-            System.out.println("ERROR: customerDAO --> Insert: " + e);
+            System.out.println("CustomerDAO --> save() : " + e);
         }
     }
 }

@@ -1,12 +1,21 @@
 import { urlContextPath } from './GlobalVariable.js'
 
-document.getElementById('add-to-cart').onclick = async () => {
-  const url = window.location.search
-  const urlPram = new URLSearchParams(url)
-  const productId = urlPram.get('product-id')
-  const customerId = urlPram.get('customer-id')
-  const quantity = document.getElementById('quantity')
-  await fetch(`${urlContextPath}/cart?product-id=9&customer-id=1&quantity=2`, {
-    method: 'POST'
+const forms = document.querySelectorAll('.add-product-to-cart')
+if (forms !== null) {
+  forms.forEach(form => {
+    form.onsubmit = async event => {
+      event.preventDefault()
+      const formData = new FormData(form)
+      let productId = formData.get('product-id').replace('.0', '')
+      formData.set('product-id', productId)
+
+      console.log(formData.get('product-id'))
+      console.log(formData.get('quantity'))
+
+      await fetch(`${urlContextPath}/api/cart`, {
+        method: 'POST',
+        body: formData
+      })
+    }
   })
 }
