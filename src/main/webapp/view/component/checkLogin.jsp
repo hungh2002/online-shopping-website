@@ -8,14 +8,15 @@
 			<a class="nav-link" href="#">${sessionScope.username}</a>
 		</li>
 			<li class="nav-item">
-			<a class="nav-link"
-				href="${pageContext.request.contextPath}/api/customer?auth=sign-out">Sign
-				out</a>
+			<button class="nav-link" id="sign-out-button">Sign out</button>
 			</li>
 	</c:when>
 <c:otherwise>
 		<li class="nav-item">
-			<a class="nav-link" href="/signIn">Sign in</a>
+			<a class="nav-link" href="/auth?auth=sign-in">Sign in</a>
 		</li>
 	</c:otherwise>
 </c:choose>
+
+<script type="module"
+		src="${pageContext.request.contextPath}/view/resources/js/SignOut.js"></script>
