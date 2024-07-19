@@ -30,7 +30,7 @@ public class ProductDAOTest implements DAOTestInterface {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        new RefreshTheTable().execute(table, Env.createProductsTableScript);
+        new RefreshTheTable().execute(table, Env.CREATE_PRODUCTS_TABLE_SCRIPT);
 
         productDAO = new ProductDAO();
         productDAO.save(product1);
@@ -71,7 +71,8 @@ public class ProductDAOTest implements DAOTestInterface {
                     .equals(sortedProductsList.get(i).toString()));
         }
 
-        List<Product> foundProductsListOrderByWithLimit = productDAO.findAllWithLimit(2, "create_at-asc");
+        List<Product> foundProductsListOrderByWithLimit =
+                productDAO.findAllWithLimit(2, "create_at-asc");
         for (int i = 0; i < foundProductsListOrderByWithLimit.size(); i++) {
             assertTrue(foundProductsList.get(i).toString()
                     .equals(sortedProductsList.get(i).toString()));

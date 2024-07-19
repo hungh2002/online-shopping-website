@@ -19,12 +19,7 @@ public class CartService {
         List<Cart> cartList = null;
 
         CartDAO cartDAO = null;
-        try {
-            cartDAO = new CartDAO();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        cartDAO = new CartDAO();
         try {
             cartList = cartDAO.findByCustomerId(customerId);
         } catch (Exception e) {
@@ -40,12 +35,7 @@ public class CartService {
         List<Cart> cartList = new ArrayList<>();
 
         CartDAO cartDAO = null;
-        try {
-            cartDAO = new CartDAO();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        cartDAO = new CartDAO();
         try {
             Cart cart = cartDAO.findByCustomerIdAndProductId(customerId, productId);
             cartList.add(cart);
@@ -63,14 +53,9 @@ public class CartService {
         CartDAO cartDAO = null;
         ProductDAO productDAO = null;
         CustomerDAO customerDAO = null;
-        try {
-            cartDAO = new CartDAO();
-            productDAO = new ProductDAO();
-            customerDAO = new CustomerDAO();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        cartDAO = new CartDAO();
+        productDAO = new ProductDAO();
+        customerDAO = new CustomerDAO();
         try {
             Cart exampleCart = cartDAO.findByCustomerIdAndProductId(customerId, productId);
             if (exampleCart != null) {

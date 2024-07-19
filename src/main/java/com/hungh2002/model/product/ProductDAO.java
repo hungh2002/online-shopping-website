@@ -17,8 +17,8 @@ import com.hungh2002.service.utils.SQLUtils.SQLUtils;
  */
 public class ProductDAO extends SQLUtils<Product> {
 
-    public ProductDAO() throws SQLException {
-        super("products", Env.createProductsTableScript);
+    public ProductDAO() {
+        super("products", Env.CREATE_PRODUCTS_TABLE_SCRIPT);
     }
 
     @Override

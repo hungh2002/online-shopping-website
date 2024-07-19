@@ -15,8 +15,8 @@ import com.hungh2002.service.utils.SQLUtils.SQLUtils;
  */
 public class CustomerDAO extends SQLUtils<Customer> {
 
-    public CustomerDAO() throws SQLException {
-        super("customers", Env.createCustomersTableScript);
+    public CustomerDAO() {
+        super("customers", Env.CREATE_CUSTOMER_TABLE_SCRIPT);
     }
 
     public Customer findByUsername(String username) {

@@ -7,21 +7,31 @@ import com.hungh2002.config.DBConnection;
 
 public class RefreshTheTable extends DBConnection {
 
-    public void execute(String table, String createScript) throws SQLException {
+    public void execute(String table, String createScript) {
         dropTable(table);
         createTable(createScript);
     }
 
-    public void dropForeignKey() throws SQLException {
+    public void dropForeignKey() {
         String sqlDropForeignKeyString = " SET FOREIGN_KEY_CHECKS=0 ";
-        Statement dropForeignKey = connection.createStatement();
-        dropForeignKey.execute(sqlDropForeignKeyString);
+        try {
+            Statement dropForeignKey = connection.createStatement();
+            dropForeignKey.execute(sqlDropForeignKeyString);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    public void recoverForeignKey() throws SQLException {
+    public void recoverForeignKey() {
         String sqlRecoverForeignKeyString = " SET FOREIGN_KEY_CHECKS=1 ";
-        Statement recoverForeignKey = connection.createStatement();
-        recoverForeignKey.execute(sqlRecoverForeignKeyString);
+        try {
+            Statement recoverForeignKey = connection.createStatement();
+            recoverForeignKey.execute(sqlRecoverForeignKeyString);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void dropTable(String table) {
@@ -39,8 +49,13 @@ public class RefreshTheTable extends DBConnection {
         }
     }
 
-    public void createTable(String createScript) throws SQLException {
-        PreparedStatement query = connection.prepareStatement(createScript);
-        query.execute();
+    public void createTable(String createScript) {
+        try {
+            PreparedStatement query = connection.prepareStatement(createScript);
+            query.execute();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
