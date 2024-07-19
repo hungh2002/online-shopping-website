@@ -23,7 +23,7 @@ public class CustomerTest implements ModelTestInterface {
         assertNull(customer1.getSessionId());
 
         Customer customer2 = new Customer(username, password);
-        assertNull(customer1.getCustomerId());
+        assertEquals(customer2.getCustomerId(), 0);
         assertTrue(username.equals(customer2.getUsername()));
         assertTrue(password.equals(customer2.getPassword()));
         assertNull(customer2.getSessionId());

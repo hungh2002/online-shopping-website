@@ -1,2 +1,9 @@
-/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/databaseTest/DatabaseTest.java
-/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/databaseTest/ProductTest.java
+/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/model/RefreshTheTable.java
+/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/model/customer/CustomerTest.java
+/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/model/DAOTestInterface.java
+/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/service/ProductServiceTest.java
+/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/model/product/ProductTest.java
+/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/model/customer/CustomerDAOTest.java
+/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/model/ModelTestInterface.java
+/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/model/cart/CartTest.java
+/home/hungh2002/Projects/online-shopping-website/src/test/java/com/hungh2002/model/product/ProductDAOTest.java

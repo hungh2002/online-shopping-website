@@ -1,7 +1,15 @@
 package com.hungh2002.model.product;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.hungh2002.config.environmentVariable.Env;
+import com.hungh2002.service.utils.CreateTableIfNotExists;
+import com.hungh2002.service.utils.SQLUtils.SQLStatement;
 import com.hungh2002.service.utils.SQLUtils.SQLUtils;
 
 /**
@@ -9,8 +17,8 @@ import com.hungh2002.service.utils.SQLUtils.SQLUtils;
  */
 public class ProductDAO extends SQLUtils<Product> {
 
-    public ProductDAO() {
-        super("products");
+    public ProductDAO() throws SQLException {
+        super("products", Env.createProductsTableScript);
     }
 
     @Override
@@ -33,21 +41,30 @@ public class ProductDAO extends SQLUtils<Product> {
     }
 
     @Override
-    public void save(Product record) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
-    }
-
-    @Override
     public boolean update(Product record) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        return false;
     }
 
     @Override
     public void insert(Product record) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+        Map<String, String> mapData = new HashMap<>();
+        mapData.put("table", table);
+        mapData.put("column", " name, category, price, image, create_at ");
+        mapData.put("data", " ?, ?, ?, ?, ? ");
+
+        String sqlInsertString = SQLStatement.insert(mapData);
+        try {
+            PreparedStatement insert = connection.prepareStatement(sqlInsertString);
+
+            insert.setString(1, record.getName());
+            insert.setString(2, record.getCategory());
+            insert.setDouble(3, record.getPrice());
+            insert.setString(4, record.getImage());
+            insert.setTimestamp(5, record.getCreateAt());
+            insert.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("ProductDAO --> save() : " + e);
+        }
     }
 
 }
