@@ -26,7 +26,7 @@ public class CustomerDAOTest implements DAOTestInterface {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        new RefreshTheTable().execute(table, Env.createCustomersTableScript);
+        new RefreshTheTable().execute(table, Env.CREATE_CUSTOMER_TABLE_SCRIPT);
 
         customersList = new ArrayList<>();
         customersList.add(customer1);
@@ -80,7 +80,8 @@ public class CustomerDAOTest implements DAOTestInterface {
                     foundCustomersList.get(i).toString().equals(customersList.get(i).toString()));
         }
 
-        List<Customer> foundCustomersListOrderByWithLimit = customerDAO.findAllWithLimit(2, "username-asc");
+        List<Customer> foundCustomersListOrderByWithLimit =
+                customerDAO.findAllWithLimit(2, "username-asc");
         for (int i = 0; i < foundCustomersListOrderByWithLimit.size(); i++) {
             assertTrue(
                     foundCustomersList.get(i).toString().equals(customersList.get(i).toString()));

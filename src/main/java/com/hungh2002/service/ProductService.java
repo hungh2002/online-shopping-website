@@ -14,12 +14,7 @@ public class ProductService {
     public List<Product> getProduct(long productId) {
         List<Product> productsList = new ArrayList<>();
         ProductDAO productDAO = null;
-        try {
-            productDAO = new ProductDAO();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        productDAO = new ProductDAO();
         try {
             Product product = productDAO.findById(productId);
             productsList.add(product);
@@ -35,12 +30,7 @@ public class ProductService {
     public List<Product> getProductsList(String orderBy) {
         List<Product> productsList = null;
         ProductDAO productDAO = null;
-        try {
-            productDAO = new ProductDAO();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        productDAO = new ProductDAO();
         try {
             if (orderBy != null) {
                 productsList = productDAO.findAll(orderBy);
@@ -64,12 +54,7 @@ public class ProductService {
 
         List<Product> productsList = null;
         ProductDAO productDAO = null;
-        try {
-            productDAO = new ProductDAO();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        productDAO = new ProductDAO();
         try {
             if (orderBy != null) {
                 productsList = productDAO.findAllWithLimit(limit, orderBy);

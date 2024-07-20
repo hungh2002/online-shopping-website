@@ -17,10 +17,9 @@ public abstract class SQLUtils<T> extends DBConnection {
 
     protected String table;
 
-    protected SQLUtils(String table, String createTableIfNotExists) throws SQLException {
+    protected SQLUtils(String table, String createTableIfNotExists) {
         this.table = table;
-        new CreateTableIfNotExists().execute(table, createTableIfNotExists);
-        ;
+        new CreateTableIfNotExists().execute(table, createTableIfNotExists);;
     }
 
     public abstract boolean update(T record);

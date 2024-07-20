@@ -42,8 +42,8 @@ public class CartDAOTest implements DAOTestInterface {
         private static CartDAO cartDAO;
 
         @BeforeAll
-        public static void setupProductTable() throws SQLException {
-                new RefreshTheTable().execute(productTable, Env.createProductsTableScript);
+        public static void setupProductTable() {
+                new RefreshTheTable().execute(productTable, Env.CREATE_PRODUCTS_TABLE_SCRIPT);
 
                 productDAO = new ProductDAO();
                 productDAO.save(product1);
@@ -52,8 +52,8 @@ public class CartDAOTest implements DAOTestInterface {
         }
 
         @BeforeAll
-        public static void setupCustomerTable() throws SQLException {
-                new RefreshTheTable().execute(customerTable, Env.createCustomersTableScript);
+        public static void setupCustomerTable() {
+                new RefreshTheTable().execute(customerTable, Env.CREATE_CUSTOMER_TABLE_SCRIPT);
 
                 customerDAO = new CustomerDAO();
                 customerDAO.save(customer1);
@@ -63,7 +63,7 @@ public class CartDAOTest implements DAOTestInterface {
 
         @BeforeAll
         public static void setupCartTable() throws SQLException {
-                new RefreshTheTable().execute(cartTable, Env.createCartTableScript);
+                new RefreshTheTable().execute(cartTable, Env.CREATE_CART_TABLE_SCRIPT);
 
                 cartList = new ArrayList<>();
                 cartList.add(cart1);
@@ -102,8 +102,10 @@ public class CartDAOTest implements DAOTestInterface {
 
         @Test
         void testFindByCustomerIdAndProductId() {
-                assertTrue(cartDAO.findByCustomerIdAndProductId(customer2.getCustomerId(),
-                                product2.getProductId()).toString().equals(cart2.toString()));
+                assertTrue(cartDAO
+                                .findByCustomerIdAndProductId(customer2.getCustomerId(),
+                                                product2.getProductId())
+                                .toString().equals(cart2.toString()));
         }
 
         @Test

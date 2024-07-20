@@ -17,12 +17,7 @@ public class CustomerService {
         // String sessionId = session.getId();
 
         CustomerDAO customerDAO = null;
-        try {
-            customerDAO = new CustomerDAO();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        customerDAO = new CustomerDAO();
         try {
             if (customerDAO.exists("username", username) == true) {
                 status = "Account already exists";
@@ -74,12 +69,7 @@ public class CustomerService {
         // }
 
         CustomerDAO customerDAO = null;
-        try {
-            customerDAO = new CustomerDAO();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        customerDAO = new CustomerDAO();
         try {
             customer = customerDAO.findByUsername(username);
 
