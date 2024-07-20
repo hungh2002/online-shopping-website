@@ -32,7 +32,8 @@ public class SQLStatement {
             limit = " LIMIT " + args.get("limit");
         }
 
-        return " SELECT " + column + " FROM " + table + orderBy + limit + condition;
+        return " SELECT " + " " + column + " " + " FROM " + table + " " + orderBy + " " + limit
+                + " " + condition;
 
     }
 

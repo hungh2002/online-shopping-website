@@ -66,5 +66,13 @@ public class Cart {
         this.quantity = quantity;
     }
 
-
+    @Override
+    public String toString() {
+        return "Cart [cartId=" + cartId + ", Product [productId=" + product.getProductId()
+                + ", name=" + product.getName() + ", category=" + product.getCategory() + ", price="
+                + product.getPrice() + ", image=" + product.getImage() + "]" + ", customer="
+                + customer + ", Customer [customerId=" + customer.getCustomerId() + ", username="
+                + customer.getUsername() + ", password=" + customer.getPassword() + ", sessionId="
+                + customer.getSessionId() + "]" + "]";
+    }
 }

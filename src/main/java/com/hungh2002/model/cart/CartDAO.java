@@ -3,13 +3,12 @@ package com.hungh2002.model.cart;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import com.hungh2002.config.DBConnection;
+
+import com.hungh2002.config.environmentVariable.Env;
 import com.hungh2002.model.customer.Customer;
 import com.hungh2002.model.customer.CustomerDAO;
 import com.hungh2002.model.product.Product;
@@ -19,8 +18,8 @@ import com.hungh2002.service.utils.SQLUtils.SQLUtils;
 
 public class CartDAO extends SQLUtils<Cart> {
 
-    public CartDAO() {
-        super("cart");
+    public CartDAO() throws SQLException {
+        super("cart", Env.createCartTableScript);
     }
 
     public List<Cart> findByCustomerId(long customerId) {
@@ -127,7 +126,7 @@ public class CartDAO extends SQLUtils<Cart> {
     }
 
     @Override
-    public Cart setResultSetToObject(ResultSet resultSet) {
+    public Cart setResultSetToObject(ResultSet resultSet) throws SQLException {
         Cart cart = null;
         ProductDAO productDAO = new ProductDAO();
         CustomerDAO customerDAO = new CustomerDAO();
