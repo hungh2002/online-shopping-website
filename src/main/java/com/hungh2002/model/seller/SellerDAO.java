@@ -1,4 +1,4 @@
-package com.hungh2002.model.cart;
+package com.hungh2002.model.seller;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,14 +16,14 @@ import com.hungh2002.model.product.ProductDAO;
 import com.hungh2002.service.utils.SQLUtils.SQLStatement;
 import com.hungh2002.service.utils.SQLUtils.SQLUtils;
 
-public class CartDAO extends SQLUtils<Cart> {
+public class SellerDAO extends SQLUtils<Seller> {
 
-    public CartDAO() {
-        super("cart", Env.CREATE_CART_TABLE_SCRIPT);
+    public SellerDAO() {
+        super("sellers", Env.CREATE_SELLERS_TABLE_SCRIPT);
     }
 
-    public List<Cart> findByCustomerId(long customerId) {
-        List<Cart> records = new LinkedList<>();
+    public List<Seller> findByCustomerId(long customerId) {
+        List<Seller> records = new LinkedList<>();
 
         Map<String, String> mapData = new HashMap<>();
         mapData.put("table", table);
@@ -36,18 +36,18 @@ public class CartDAO extends SQLUtils<Cart> {
             ResultSet resultSet = query.executeQuery();
 
             while (resultSet.next()) {
-                Cart record = setResultSetToObject(resultSet);
+                Seller record = setResultSetToObject(resultSet);
                 records.add(record);
             }
         } catch (Exception e) {
             // Print error if there is a problem
-            System.out.println("ERROR: CartDAO --> findByCustomerId() : " + e);
+            System.out.println("ERROR: SellerDAO --> findByCustomerId() : " + e);
         }
         return records;
     }
 
-    public Cart findByCustomerIdAndProductId(long customerId, long productId) {
-        Cart record = null;
+    public Seller findByCustomerIdAndProductId(long customerId, long productId) {
+        Seller record = null;
 
         Map<String, String> mapData = new HashMap<>();
         mapData.put("table", table);
@@ -65,23 +65,23 @@ public class CartDAO extends SQLUtils<Cart> {
             }
         } catch (Exception e) {
             // Print error if there is a problem
-            System.out.println("ERROR: CartDAO --> findByCustomerId() : " + e);
+            System.out.println("ERROR: SellerDAO --> findByCustomerId() : " + e);
         }
         return record;
     }
 
     @Override
-    public boolean update(Cart cart) {
+    public boolean update(Seller seller) {
         boolean updated = false;
 
-        long productId = cart.getProduct().getProductId();
-        long customerId = cart.getCustomer().getCustomerId();
+        long productId = seller.getProduct().getProductId();
+        long customerId = seller.getCustomer().getCustomerId();
 
         if (exists(productId, customerId) == true) {
             Map<String, String> mapData = new HashMap<>();
             mapData.put("table", table);
             mapData.put("column", " product_id = ?, customer_id = ?, quantity = ? ");
-            mapData.put("condition", " cart_id = ? ");
+            mapData.put("condition", " seller_id = ? ");
 
             String sqlUpdateString = SQLStatement.update(mapData);
             try {
@@ -89,15 +89,15 @@ public class CartDAO extends SQLUtils<Cart> {
 
                 update.setLong(1, productId);
                 update.setLong(2, customerId);
-                update.setInt(3, cart.getQuantity());
-                long cartId = findByCustomerIdAndProductId(customerId, productId).getCartId();
-                update.setLong(4, cartId);
+                update.setInt(3, seller.getQuantity());
+                long sellerId = findByCustomerIdAndProductId(customerId, productId).getSellerId();
+                update.setLong(4, sellerId);
                 update.executeUpdate();
 
                 updated = true;
 
             } catch (Exception e) {
-                System.out.println("ERROR: cartDAO --> Update() : " + e);
+                System.out.println("ERROR: SellerDAO --> Update() : " + e);
             }
         }
 
@@ -105,7 +105,7 @@ public class CartDAO extends SQLUtils<Cart> {
     }
 
     @Override
-    public void insert(Cart record) {
+    public void insert(Seller record) {
 
         Map<String, String> mapData = new HashMap<>();
         mapData.put("table", table);
@@ -126,13 +126,13 @@ public class CartDAO extends SQLUtils<Cart> {
     }
 
     @Override
-    public Cart setResultSetToObject(ResultSet resultSet) throws SQLException {
-        Cart cart = null;
+    public Seller setResultSetToObject(ResultSet resultSet) throws SQLException {
+        Seller seller = null;
         ProductDAO productDAO = new ProductDAO();
         CustomerDAO customerDAO = new CustomerDAO();
 
         try {
-            long cartId = resultSet.getLong("cart_id");
+            long sellerId = resultSet.getLong("seller_id");
 
             long productId = resultSet.getLong("product_id");
             Product product = productDAO.findById(productId);
@@ -142,14 +142,14 @@ public class CartDAO extends SQLUtils<Cart> {
 
             int quantity = resultSet.getInt("quantity");
 
-            cart = new Cart(cartId, product, customer, quantity);
+            seller = new Seller(sellerId, product, customer, quantity);
         } catch (Exception e) {
-            System.out.println("CartDAO --> setResultSetToObject() : " + e);
+            System.out.println("SellerDAO --> setResultSetToObject() : " + e);
         } finally {
             productDAO.close();
             customerDAO.close();
         }
-        return cart;
+        return seller;
     }
 
     public boolean exists(long productId, long customerId) {

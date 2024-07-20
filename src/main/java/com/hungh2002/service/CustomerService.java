@@ -1,19 +1,9 @@
 package com.hungh2002.service;
 
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLException;
+
 import com.hungh2002.model.customer.Customer;
 import com.hungh2002.model.customer.CustomerDAO;
-import com.hungh2002.service.utils.parameterUtils;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 /**
@@ -22,12 +12,12 @@ import jakarta.servlet.http.HttpSession;
 public class CustomerService {
 
     public String signUp(String username, String password) {
-        Customer customer = null;
         String status = null;
         // HttpSession session = request.getSession();
         // String sessionId = session.getId();
 
-        CustomerDAO customerDAO = new CustomerDAO();
+        CustomerDAO customerDAO = null;
+        customerDAO = new CustomerDAO();
         try {
             if (customerDAO.exists("username", username) == true) {
                 status = "Account already exists";
@@ -47,7 +37,8 @@ public class CustomerService {
         Customer customer = null;
         String status = null;
 
-        // String rememberMe = parameterUtils.getParam(request.getParameter("rememberMe"));
+        // String rememberMe =
+        // parameterUtils.getParam(request.getParameter("rememberMe"));
         // Cookie[] cookies = request.getCookies();
         // boolean signInBySessionId = false;
 
@@ -77,7 +68,8 @@ public class CustomerService {
         // auth.add(password);
         // }
 
-        CustomerDAO customerDAO = new CustomerDAO();
+        CustomerDAO customerDAO = null;
+        customerDAO = new CustomerDAO();
         try {
             customer = customerDAO.findByUsername(username);
 
@@ -87,7 +79,8 @@ public class CustomerService {
                 status = "Sign in success";
 
                 // if (rememberMe.equals("true")) {
-                // Cookie sessionIdCookie = new Cookie("sessionId", data.getString("sessionId"));
+                // Cookie sessionIdCookie = new Cookie("sessionId",
+                // data.getString("sessionId"));
                 // sessionIdCookie.setMaxAge(60 * 60 * 24 * 365 * 10);
                 // sessionIdCookie.setPath("/");
                 // response.addCookie(sessionIdCookie);
@@ -107,6 +100,7 @@ public class CustomerService {
     public void signOut(HttpSession session) {
 
         session.removeAttribute("username");
+        session.removeAttribute("customerId");
 
         // Cookie[] cookies = request.getCookies();
 

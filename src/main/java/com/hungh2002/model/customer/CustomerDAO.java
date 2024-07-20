@@ -4,8 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
+
+import com.hungh2002.config.environmentVariable.Env;
 import com.hungh2002.service.utils.SQLUtils.SQLStatement;
 import com.hungh2002.service.utils.SQLUtils.SQLUtils;
 
@@ -14,10 +15,8 @@ import com.hungh2002.service.utils.SQLUtils.SQLUtils;
  */
 public class CustomerDAO extends SQLUtils<Customer> {
 
-
-
     public CustomerDAO() {
-        super("customers");
+        super("customers", Env.CREATE_CUSTOMER_TABLE_SCRIPT);
     }
 
     public Customer findByUsername(String username) {
@@ -60,8 +59,12 @@ public class CustomerDAO extends SQLUtils<Customer> {
     }
 
     @Override
-    public void save(Customer record) {
+    public boolean update(Customer record) {
+        return false;
+    }
 
+    @Override
+    public void insert(Customer record) {
         Map<String, String> mapData = new HashMap<>();
         mapData.put("table", table);
         mapData.put("column", " username, password ");
@@ -73,7 +76,6 @@ public class CustomerDAO extends SQLUtils<Customer> {
 
             insert.setString(1, record.getUsername());
             insert.setString(2, record.getPassword());
-            // insert.setString(3, record.getSessionId());
             insert.executeUpdate();
         } catch (Exception e) {
             System.out.println("CustomerDAO --> save() : " + e);

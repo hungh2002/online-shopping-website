@@ -2,11 +2,13 @@ package com.hungh2002.service.utils.SQLUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import com.hungh2002.config.DBConnection;
+import com.hungh2002.service.utils.CreateTableIfNotExists;
 
 /**
  * SQLUtils
@@ -15,15 +17,16 @@ public abstract class SQLUtils<T> extends DBConnection {
 
     protected String table;
 
-    protected SQLUtils(String table) {
+    protected SQLUtils(String table, String createTableIfNotExists) {
         this.table = table;
+        new CreateTableIfNotExists().execute(table, createTableIfNotExists);;
     }
 
     public abstract boolean update(T record);
 
     public abstract void insert(T record);
 
-    public abstract T setResultSetToObject(ResultSet resultSet);
+    public abstract T setResultSetToObject(ResultSet resultSet) throws SQLException;
 
     public List<T> findAll(String orderBy) {
         List<T> records = new LinkedList<>();
@@ -54,7 +57,6 @@ public abstract class SQLUtils<T> extends DBConnection {
     public List<T> findAll() {
         return findAll(null);
     }
-
 
     public List<T> findAllWithLimit(int limit, String orderBy) {
         List<T> records = new LinkedList<>();
@@ -92,7 +94,7 @@ public abstract class SQLUtils<T> extends DBConnection {
 
         Map<String, String> mapData = new HashMap<>();
         mapData.put("table", table);
-        mapData.put("condition", table.replaceAll("s$", "_id = ?"));
+        mapData.put("condition", table.replaceAll("s$", "_id = ? "));
 
         String sqlQueryString = SQLStatement.select(mapData);
         try {
@@ -111,13 +113,13 @@ public abstract class SQLUtils<T> extends DBConnection {
         return record;
     }
 
-    public boolean exists(String conditionColumn, String data) {
+    public boolean exists(String selectedColumn, String data) {
         boolean exists = false;
 
         Map<String, String> mapData = new HashMap<>();
         mapData.put("table", table);
-        mapData.put("column", "1");
-        mapData.put("condition", conditionColumn + " =? ");
+        mapData.put("column", " 1 ");
+        mapData.put("condition", selectedColumn + " =? ");
 
         String sqlQueryString = SQLStatement.select(mapData);
         try {
@@ -133,6 +135,10 @@ public abstract class SQLUtils<T> extends DBConnection {
             System.out.println("ERROR: SQLUtils --> exists() : " + e);
         }
         return exists;
+    }
+
+    public boolean exists(String selectedColumn, long data) {
+        return exists(selectedColumn, String.valueOf(data));
     }
 
     public void save(T record) {

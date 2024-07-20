@@ -63,4 +63,12 @@ public class Customer {
         this.sessionId = sessionId;
     }
 
+    @Override
+    public String toString() {
+        return "Customer [customerId=" + customerId + ", username=" + username + ", password="
+                + password + ", sessionId=" + sessionId + "]";
+    }
+
+
+
 }

@@ -1,45 +1,45 @@
-package com.hungh2002.model.cart;
+package com.hungh2002.model.seller;
 
 import com.hungh2002.model.customer.Customer;
 import com.hungh2002.model.product.Product;
 
 /**
- * Cart
+ * Seller
  */
-public class Cart {
+public class Seller {
 
-    private long cartId;
+    private long sellerId;
     private Product product;
     private Customer customer;
     private int quantity;
 
-    public Cart() {}
+    public Seller() {}
 
-    public Cart(Product product, Customer customer, int quantity) {
+    public Seller(Product product, Customer customer, int quantity) {
         this.product = product;
         this.customer = customer;
         this.quantity = quantity;
     }
 
-    public Cart(long cartId, Product product, Customer customer, int quantity) {
-        if (cartId <= 0) {
+    public Seller(long sellerId, Product product, Customer customer, int quantity) {
+        if (sellerId <= 0) {
             throw new IllegalArgumentException("Cannot be a negative number or 0");
         }
-        this.cartId = cartId;
+        this.sellerId = sellerId;
         this.product = product;
         this.customer = customer;
         this.quantity = quantity;
     }
 
-    public long getCartId() {
-        return this.cartId;
+    public long getSellerId() {
+        return this.sellerId;
     }
 
-    public void setCartId(long cartId) {
-        if (cartId <= 0) {
+    public void setSellerId(long sellerId) {
+        if (sellerId <= 0) {
             throw new IllegalArgumentException("Cannot be a negative number or 0");
         }
-        this.cartId = cartId;
+        this.sellerId = sellerId;
     }
 
     public Product getProduct() {
@@ -68,7 +68,7 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart [cartId=" + cartId + ", Product [productId=" + product.getProductId()
+        return "seller [sellerId=" + sellerId + ", Product [productId=" + product.getProductId()
                 + ", name=" + product.getName() + ", category=" + product.getCategory() + ", price="
                 + product.getPrice() + ", image=" + product.getImage() + "]" + ", customer="
                 + customer + ", Customer [customerId=" + customer.getCustomerId() + ", username="
